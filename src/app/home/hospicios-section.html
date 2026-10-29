@@ -1,0 +1,54 @@
+<section id="hospicios" class="section section--dark" aria-labelledby="hospicios-titulo">
+  <div class="container">
+    <header class="cabecalho">
+      <p class="eyebrow">Nossos hospícios</p>
+      <h2 id="hospicios-titulo">Encontre o seu hospício</h2>
+      <p class="lead">
+        Cada cidade tem o seu grupo. Escolha o mais perto de você e siga nas redes.
+      </p>
+    </header>
+
+    <app-carousel
+      [items]="hospicios"
+      label="Hospícios do Loucos Pelo Botafogo"
+      [itemLabel]="nomeDe"
+      [autoplay]="false"
+    >
+      <ng-template #slide let-h>
+        <app-card variant="surface" padding="none">
+          <article class="destaque">
+            <div class="painel">
+              <div class="brasao">
+                <img [ngSrc]="h.imagem" fill [alt]="'Brasão do ' + h.nome" />
+              </div>
+              <h3 class="titulo">{{ h.nome }}</h3>
+            </div>
+            <div class="corpo">
+              <p class="descricao">{{ h.descricao }}</p>
+              <a
+                app-button
+                variant="dark"
+                size="lg"
+                [href]="h.redeSocial.url"
+                target="_blank"
+                rel="noopener noreferrer"
+                [appTrack]="'social_click'"
+                [appTrackLocal]="'hospicio-' + h.id"
+              >
+                <app-icon [name]="h.redeSocial.tipo" />
+                Ver no {{ rotuloRede(h) }}
+                <span class="sr-only">de {{ h.nome }} (abre em nova aba)</span>
+              </a>
+            </div>
+          </article>
+        </app-card>
+      </ng-template>
+
+      <ng-template #thumb let-h let-active="active">
+        <span class="miniatura" [class.ativa]="active">
+          <img [ngSrc]="miniatura(h)" fill alt="" />
+        </span>
+      </ng-template>
+    </app-carousel>
+  </div>
+</section>

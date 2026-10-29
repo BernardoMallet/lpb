@@ -1,0 +1,68 @@
+<header class="site-header">
+  <div class="bar container">
+    <a
+      routerLink="/"
+      class="brand"
+      aria-label="Loucos pelo Botafogo, página inicial"
+      (click)="fechar()"
+    >
+      <img ngSrc="images/logo.webp" width="46" height="46" alt="" />
+      <span class="brand-name">Loucos pelo Botafogo</span>
+    </a>
+
+    <nav id="menu-principal" class="menu" [class.aberto]="aberto()" aria-label="Principal">
+      <ul>
+        @for (link of links; track link.fragmento) {
+          <li>
+            <a routerLink="/" [fragment]="link.fragmento" (click)="fechar()">{{ link.rotulo }}</a>
+          </li>
+        }
+      </ul>
+      <a
+        app-button
+        class="entrar-menu"
+        variant="outline-light"
+        block
+        [routerLink]="rotas.entrar"
+        [appTrack]="'cta_entrar'"
+        appTrackLocal="header-menu"
+        (click)="fechar()"
+      >
+        Entrar
+      </a>
+    </nav>
+
+    <div class="acoes">
+      <a
+        app-button
+        class="entrar-topo"
+        variant="outline-light"
+        [routerLink]="rotas.entrar"
+        [appTrack]="'cta_entrar'"
+        appTrackLocal="header"
+      >
+        Entrar
+      </a>
+      <a
+        app-button
+        variant="primary"
+        [routerLink]="rotas.sejaSocio"
+        [appTrack]="'cta_seja_socio'"
+        appTrackLocal="header"
+      >
+        Seja Sócio
+      </a>
+      <button
+        #botaoMenu
+        type="button"
+        class="hamburguer"
+        aria-controls="menu-principal"
+        [attr.aria-expanded]="aberto()"
+        [attr.aria-label]="aberto() ? 'Fechar menu' : 'Abrir menu'"
+        (click)="alternar()"
+      >
+        <app-icon [name]="aberto() ? 'close' : 'menu'" />
+      </button>
+    </div>
+  </div>
+</header>

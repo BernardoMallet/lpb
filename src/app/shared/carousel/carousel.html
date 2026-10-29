@@ -1,0 +1,92 @@
+<div
+  class="carousel"
+  role="region"
+  aria-roledescription="carousel"
+  [attr.aria-label]="label()"
+  (mouseenter)="hovering.set(true)"
+  (mouseleave)="hovering.set(false)"
+  (focusin)="focused.set(true)"
+  (focusout)="onFocusOut($event)"
+  (keydown)="onKeydown($event)"
+>
+  <div
+    class="viewport"
+    (pointerdown)="onPointerDown($event)"
+    (pointerup)="onPointerUp($event)"
+    (pointercancel)="onPointerCancel()"
+  >
+    <div
+      class="track"
+      [style.transform]="translate()"
+      [attr.aria-live]="running() ? 'off' : 'polite'"
+    >
+      @for (item of items(); track $index) {
+        <div
+          class="slide"
+          role="group"
+          aria-roledescription="slide"
+          [id]="uid + '-slide-' + $index"
+          [attr.aria-label]="itemLabel()(item) + ', ' + ($index + 1) + ' de ' + count()"
+          [attr.inert]="$index === index() ? null : ''"
+        >
+          <ng-container
+            [ngTemplateOutlet]="slideTpl()"
+            [ngTemplateOutletContext]="{
+              $implicit: item,
+              index: $index,
+              active: $index === index(),
+            }"
+          />
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="nav">
+    <button type="button" class="arrow" aria-label="Slide anterior" (click)="prev()">
+      <app-icon name="prev" />
+    </button>
+
+    <div class="strip" #strip role="group" aria-label="Escolher slide">
+      @for (item of items(); track $index) {
+        <button
+          #indicator
+          type="button"
+          class="ind"
+          [attr.aria-label]="itemLabel()(item)"
+          [attr.aria-current]="$index === index() ? 'true' : null"
+          [attr.aria-controls]="uid + '-slide-' + $index"
+          [tabindex]="$index === index() ? 0 : -1"
+          (click)="goTo($index)"
+        >
+          @if (thumbTpl(); as thumb) {
+            <ng-container
+              [ngTemplateOutlet]="thumb"
+              [ngTemplateOutletContext]="{
+                $implicit: item,
+                index: $index,
+                active: $index === index(),
+              }"
+            />
+          } @else {
+            <span class="dot" [class.on]="$index === index()"></span>
+          }
+        </button>
+      }
+    </div>
+
+    <button type="button" class="arrow" aria-label="Próximo slide" (click)="next()">
+      <app-icon name="next" />
+    </button>
+  </div>
+
+  <div class="meta">
+    <span class="count">{{ index() + 1 }} de {{ count() }}</span>
+    @if (autoplay() && !reducedMotion) {
+      <button type="button" class="toggle" (click)="playing.set(!playing())">
+        <app-icon [name]="playing() ? 'pause' : 'play'" />
+        {{ playing() ? 'Pausar rotação automática' : 'Iniciar rotação automática' }}
+      </button>
+    }
+  </div>
+</div>

@@ -1,0 +1,81 @@
+:host {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55em;
+  min-height: 44px;
+  padding: 0 1.4em;
+  border: 2px solid transparent;
+  border-radius: 999px;
+  font: 800 0.875rem/1 var(--font-body);
+  letter-spacing: 0.06em;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    background-color 0.15s,
+    color 0.15s,
+    border-color 0.15s,
+    transform 0.15s;
+}
+
+:host(.s-lg) {
+  min-height: 54px;
+  padding: 0 1.9em;
+  font-size: 1rem;
+}
+
+:host(.block) {
+  display: flex;
+  width: 100%;
+}
+
+:host(.v-primary) {
+  background: var(--c-star);
+  color: var(--c-black);
+}
+:host(.v-primary:hover) {
+  background: var(--c-white);
+  border-color: var(--c-black);
+}
+
+:host(.v-dark) {
+  background: var(--c-black);
+  color: var(--c-white);
+}
+:host(.v-dark:hover) {
+  background: var(--c-star);
+  color: var(--c-black);
+}
+
+:host(.v-outline) {
+  border-color: var(--c-black);
+  color: var(--c-black);
+}
+:host(.v-outline:hover) {
+  background: var(--c-black);
+  color: var(--c-white);
+}
+
+:host(.v-outline-light) {
+  border-color: var(--c-white);
+  color: var(--c-white);
+}
+:host(.v-outline-light:hover) {
+  background: var(--c-white);
+  color: var(--c-black);
+}
+
+:host(:hover) {
+  transform: translateY(-1px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :host {
+    transition: none;
+  }
+  :host(:hover) {
+    transform: none;
+  }
+}

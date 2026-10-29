@@ -1,0 +1,124 @@
+:host {
+  display: block;
+  min-width: 0;
+}
+
+.viewport {
+  overflow: hidden;
+  border-radius: var(--r-lg);
+  touch-action: pan-y;
+}
+
+.track {
+  display: flex;
+  transition: transform 0.45s cubic-bezier(0.22, 0.7, 0.2, 1);
+}
+
+.slide {
+  flex: 0 0 100%;
+  min-width: 0;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.arrow {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  transition:
+    background-color 0.15s,
+    color 0.15s,
+    border-color 0.15s;
+
+  &:hover {
+    background: var(--c-star);
+    border-color: var(--c-star);
+    color: var(--c-black);
+  }
+}
+
+.strip {
+  position: relative;
+  flex: 1;
+  display: flex;
+  gap: 12px;
+  padding: 10px 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.ind {
+  flex: none;
+  display: grid;
+  place-items: center;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.45;
+
+  &.on {
+    background: var(--c-star);
+    opacity: 1;
+  }
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 16px;
+  margin-top: 4px;
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  min-height: 44px;
+  padding: 0 4px;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .track,
+  .arrow {
+    transition: none;
+  }
+}

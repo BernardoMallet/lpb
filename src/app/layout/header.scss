@@ -1,0 +1,134 @@
+:host {
+  display: block;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.site-header {
+  height: var(--header-h);
+  border-bottom: 1px solid var(--c-graphite);
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 100%;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-right: auto;
+  text-decoration: none;
+
+  img {
+    width: 46px;
+    height: 46px;
+    border: 2px solid var(--c-white);
+    border-radius: 50%;
+  }
+}
+
+.brand-name {
+  display: none;
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.acoes {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.acoes .entrar-topo {
+  display: none;
+}
+
+.hamburguer {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 2px solid var(--c-white);
+  border-radius: 50%;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.menu {
+  display: none;
+  position: absolute;
+  inset: var(--header-h) 0 auto 0;
+  padding: 8px var(--gutter) 24px;
+  background: var(--c-black);
+  border-bottom: 1px solid var(--c-graphite);
+
+  &.aberto {
+    display: block;
+  }
+
+  ul {
+    margin: 0 0 16px;
+    padding: 0;
+    list-style: none;
+  }
+
+  li a {
+    display: flex;
+    align-items: center;
+    min-height: 52px;
+    border-bottom: 1px solid var(--c-graphite);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+}
+
+@media (min-width: 600px) {
+  .brand-name {
+    display: inline;
+  }
+}
+
+@media (min-width: 900px) {
+  .hamburguer,
+  .menu .entrar-menu {
+    display: none;
+  }
+
+  .acoes .entrar-topo {
+    display: inline-flex;
+  }
+
+  .menu {
+    display: block;
+    position: static;
+    padding: 0;
+    border: 0;
+    background: none;
+
+    ul {
+      display: flex;
+      gap: 28px;
+      margin: 0;
+    }
+
+    li a {
+      min-height: 44px;
+      border: 0;
+      font-size: 0.875rem;
+
+      &:hover {
+        color: var(--c-star);
+      }
+    }
+  }
+}

@@ -1,0 +1,91 @@
+<div class="pagina">
+  <div class="stripes" aria-hidden="true"></div>
+  <header class="topo container">
+    <div class="marca"><app-avatar src="images/logo.jpg" [name]="nome" [size]="44" /><span>{{ nome }}</span></div>
+    <a class="voltar-site" routerLink="/">Voltar ao site</a>
+  </header>
+  <main class="principal" id="conteudo">
+    <app-card variant="poster" class="cartao">
+      @if (etapa() === 'dados') {
+        <form class="conteudo" [formGroup]="form" (ngSubmit)="enviar()">
+          <div><p class="eyebrow">Faça parte</p><h1>Seja sócio</h1>
+            <p>Preencha seus dados e pague a primeira mensalidade para liberar seu acesso.</p></div>
+          @if (erro(); as mensagem) { <app-alert kind="erro">{{ mensagem }}</app-alert> }
+          <app-input label="Nome completo" autocomplete="name" formControlName="name" [error]="errosCampos().name ?? null" />
+          <div class="duas-colunas">
+            <app-input label="CPF" inputmode="numeric" mascara="cpf" formControlName="cpf" [error]="errosCampos().cpf ?? null" />
+            <app-input label="E-mail" type="email" autocomplete="email" formControlName="email" [error]="errosCampos().email ?? null" />
+          </div>
+          <app-input label="Senha" type="password" autocomplete="new-password" hint="Mínimo de 10 caracteres." formControlName="password" [error]="errosCampos().password ?? null" />
+          <h2>Endereço</h2>
+          <div class="duas-colunas">
+            <app-input label="CEP" inputmode="numeric" mascara="cep" formControlName="cep" [error]="errosCampos().cep ?? null" />
+            <app-input label="Rua" autocomplete="address-line1" formControlName="street" [error]="errosCampos().street ?? null" />
+            <app-input label="Número" formControlName="number" [error]="errosCampos().number ?? null" />
+            <app-input label="Complemento (opcional)" formControlName="complement" [error]="errosCampos().complement ?? null" />
+            <app-input label="Bairro" formControlName="neighborhood" [error]="errosCampos().neighborhood ?? null" />
+            <app-input label="Cidade" autocomplete="address-level2" formControlName="city" [error]="errosCampos().city ?? null" />
+            <app-input label="UF" hint="Exemplo: RJ" formControlName="state" [error]="errosCampos().state ?? null" />
+            <app-select label="Hospício" placeholder="Escolha seu hospício" [options]="hospicios()" formControlName="hospicioId" [error]="errosCampos().hospicioId ?? null" />
+          </div>
+          <p role="status">@if (buscandoCep()) { Consultando CEP… } @else { {{ avisoCep() }} }</p>
+          <fieldset>
+            <legend>Pagamento da primeira mensalidade</legend>
+            @if (mensalidade(); as valor) { <p class="valor">Mensalidade: {{ moeda.format(valor) }}</p> }
+            <label><input type="radio" formControlName="method" value="PIX" /> PIX</label>
+            <label><input type="radio" formControlName="method" value="CARD" /> Cartão de crédito</label>
+          </fieldset>
+          <label class="aceite"><input type="checkbox" formControlName="lgpdAccepted" />
+            Aceito o tratamento dos meus dados para o cadastro de sócio.</label>
+          <p><a routerLink="/politica-de-privacidade" target="_blank" rel="noopener noreferrer">Política de privacidade (rascunho para revisão)</a></p>
+          @if (errosCampos().lgpdAccepted; as mensagem) { <app-alert kind="erro">{{ mensagem }}</app-alert> }
+          <button app-button type="submit" variant="dark" size="lg" block [loading]="carregando()" [disabled]="mensalidade() === null">
+            {{ carregando() ? 'Preparando pagamento…' : 'Continuar para pagamento' }}
+          </button>
+          <p>Já é sócio? <a [routerLink]="entrar">Entrar</a></p>
+        </form>
+      } @else if (etapa() === 'pagamento') {
+        <div class="conteudo">
+          <div><p class="eyebrow">Primeira mensalidade</p><h1>Pagamento</h1></div>
+          @if (pedido()?.resumed) { <app-alert kind="info">Cadastro pendente retomado. Continue acompanhando o pagamento.</app-alert> }
+          @if (pedido()?.payment; as pagamento) { <p>Valor: {{ moeda.format(pagamento.amount) }}</p> }
+          @if (erro(); as mensagem) { <app-alert kind="erro">{{ mensagem }}</app-alert> }
+          @if (simulado()) {
+            <app-alert kind="info">Simulação local: nenhum pagamento real será efetuado.</app-alert>
+            <button app-button type="button" variant="dark" block [loading]="carregando()" (click)="confirmarSimulacao()">
+              Simular pagamento confirmado
+            </button>
+          } @else if (pedido()?.payment; as pagamento) {
+            @if (pagamento.method === 'PIX') {
+              <p>Pague pelo PIX e aguarde a confirmação nesta página.</p>
+              @if (pagamento.pixQrCodeUrl; as qr) { <img class="qr" [src]="qr" alt="QR Code para pagamento PIX" /> }
+              @if (pagamento.pixCopyPaste; as codigo) {
+                <p class="codigo">{{ codigo }}</p>
+                <button app-button type="button" variant="outline" block (click)="copiar(codigo)">Copiar código PIX</button>
+                @if (aviso(); as mensagem) { <p role="status">{{ mensagem }}</p> }
+              }
+            } @else if (pagamento.checkoutUrl; as link) {
+              <p>Conclua o pagamento no ambiente seguro do PagBank. Os dados do cartão não passam pelo nosso site.</p>
+              <a class="checkout" [href]="link" target="_blank" rel="noopener noreferrer">Abrir pagamento no PagBank</a>
+            }
+          }
+          <p role="status">Aguardando confirmação do pagamento.</p>
+          <button app-button type="button" variant="outline" block (click)="verificar()">Verificar pagamento</button>
+          <button type="button" class="link" (click)="voltar()">Voltar ao cadastro</button>
+        </div>
+      } @else if (etapa() === 'expirado' || etapa() === 'recusado') {
+        <div class="conteudo">
+          <h1>{{ etapa() === 'recusado' ? 'Pagamento recusado' : 'Pagamento expirado' }}</h1>
+          <p>Seu cadastro continua pendente. Retome com o mesmo CPF, e-mail e senha para tentar novamente.</p>
+          <button app-button type="button" variant="dark" block (click)="voltar()">Retomar cadastro</button>
+        </div>
+      } @else {
+        <div class="conteudo">
+          <p class="eyebrow">Cadastro concluído</p><h1>Bem-vindo!</h1>
+          <p>Pagamento confirmado. Entre com seu e-mail e senha para receber o código de acesso.</p>
+          <a class="checkout" [routerLink]="entrar">Entrar</a>
+        </div>
+      }
+    </app-card>
+  </main>
+</div>

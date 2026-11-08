@@ -12,6 +12,19 @@ ng serve
 
 Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
+## Cadastro com pagamento simulado
+
+Para experimentar `/seja-socio` sem cobrança real, inicie a API com os perfis
+`dev,local-payment-simulator`, sem token PagBank. Crie antes um banco PostgreSQL
+separado chamado `lpb_simulacao` em `localhost:5432` e configure as credenciais
+da API. O simulador exige esse banco e limita a API a `127.0.0.1`; não use dados
+reais. Os cadastros desse banco não aparecem no banco normal.
+
+Escolha PIX ou cartão e confirme pelo botão de simulação. Não há QR Code nem
+cobrança verdadeira. No perfil `dev`, o código OTP é registrado no log da API;
+o envio de e-mail depende da configuração de SMTP. Para receber pagamentos
+verdadeiros, inicie a API sem o perfil do simulador e configure o PagBank.
+
 ## Code scaffolding
 
 Angular CLI includes powerful code scaffolding tools. To generate a new component, run:

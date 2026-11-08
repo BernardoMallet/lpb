@@ -1,0 +1,67 @@
+<a class="skip-link" href="#conteudo" (click)="irParaConteudo($event)">Pular para o conteúdo</a>
+
+<header class="site-header topo" (keydown.escape)="fecharMenu()">
+  <div class="container barra">
+    <button
+      type="button"
+      class="hamburguer"
+      aria-controls="menu-principal"
+      [attr.aria-expanded]="menuAberto()"
+      [attr.aria-label]="menuAberto() ? 'Fechar menu' : 'Abrir menu'"
+      (click)="alternarMenu()"
+    >
+      <app-icon [name]="menuAberto() ? 'close' : 'menu'" />
+    </button>
+
+    <a class="marca" [routerLink]="rotas.aposLogin" (click)="fecharMenu()">
+      <app-avatar src="images/logo.jpg" [name]="nome" [size]="46" />
+      <span class="marca-nome">{{ nome }}</span>
+    </a>
+
+    <nav id="menu-principal" class="menu" [class.aberto]="menuAberto()" aria-label="Principal">
+      <ul>
+        @for (item of itens(); track item.rota) {
+          <li>
+            <a
+              [routerLink]="item.rota"
+              routerLinkActive="ativo"
+              ariaCurrentWhenActive="page"
+              (click)="fecharMenu()"
+            >
+              <app-icon [name]="item.icone" />
+              {{ item.rotulo }}
+            </a>
+          </li>
+        }
+      </ul>
+    </nav>
+
+    @if (auth.usuario(); as usuario) {
+      <app-dropdown [label]="'Conta de ' + usuario.name">
+        <app-avatar trigger [name]="usuario.name" [size]="40" />
+        <div header class="conta">
+          <p class="conta-nome">{{ usuario.name }}</p>
+          <p class="conta-email">{{ usuario.email }}</p>
+          <p class="conta-perfil">Perfil: {{ papel() }}</p>
+        </div>
+        <a app-menu-item [routerLink]="rotas.minhaConta">
+          <app-icon name="user" />
+          Minha conta
+        </a>
+        <button app-menu-item type="button" (click)="sair()">
+          <app-icon name="logout" />
+          Sair
+        </button>
+      </app-dropdown>
+    }
+  </div>
+</header>
+
+<main id="conteudo" tabindex="-1">
+  <router-outlet />
+</main>
+
+<app-modal heading="Sessão expirada" [open]="auth.sessaoExpirada()" [dismissible]="false">
+  <p>Por segurança, sua sessão terminou. Entre de novo para continuar de onde parou.</p>
+  <button footer app-button type="button" variant="dark" (click)="entrarDeNovo()">Entrar de novo</button>
+</app-modal>

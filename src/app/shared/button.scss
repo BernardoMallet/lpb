@@ -71,11 +71,35 @@
   transform: translateY(-1px);
 }
 
+:host(:disabled),
+:host(.loading) {
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.spin {
+  width: 1em;
+  height: 1em;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: giro 0.7s linear infinite;
+}
+
+@keyframes giro {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   :host {
     transition: none;
   }
   :host(:hover) {
     transform: none;
+  }
+  .spin {
+    animation: none;
   }
 }

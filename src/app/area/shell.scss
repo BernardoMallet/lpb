@@ -1,0 +1,166 @@
+:host {
+  display: block;
+}
+
+.topo {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.barra {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: var(--header-h);
+}
+
+.hamburguer {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  background: transparent;
+  border: 2px solid var(--c-white);
+  border-radius: 50%;
+  color: inherit;
+  cursor: pointer;
+}
+
+.marca {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-right: auto;
+  color: inherit;
+  text-decoration: none;
+}
+
+.marca-nome {
+  display: none;
+  font: 900 0.9rem/1.1 var(--font-display);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.menu {
+  display: none;
+  position: absolute;
+  inset: var(--header-h) 0 auto 0;
+  padding: 8px var(--gutter) 16px;
+  background: var(--c-black);
+  border-top: 1px solid var(--c-graphite);
+}
+
+.menu.aberto {
+  display: block;
+}
+
+.menu ul {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.menu a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 48px;
+  padding: 0 14px;
+  border-radius: var(--r-sm);
+  color: inherit;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.menu a:hover {
+  background: var(--c-graphite);
+}
+
+.menu a.ativo {
+  background: var(--c-star);
+  color: var(--c-black);
+}
+
+.conta {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.conta p {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.conta-nome {
+  font-weight: 800;
+}
+
+.conta-email,
+.conta-perfil {
+  color: var(--c-mute);
+  font-size: 0.875rem;
+}
+
+main {
+  min-height: calc(100vh - var(--header-h));
+  min-height: calc(100dvh - var(--header-h));
+  background: var(--c-paper);
+}
+
+main:focus {
+  outline: none;
+}
+
+@media (min-width: 600px) {
+  .marca-nome {
+    display: inline;
+  }
+}
+
+@media (min-width: 900px) {
+  .hamburguer {
+    display: none;
+  }
+
+  .marca {
+    margin-right: 0;
+  }
+
+  .menu {
+    display: block;
+    position: static;
+    flex: 1;
+    padding: 0;
+    margin-left: 20px;
+    background: none;
+    border: 0;
+  }
+
+  .menu ul {
+    display: flex;
+    gap: 24px;
+  }
+
+  .menu a {
+    padding: 0 2px;
+    border-bottom: 3px solid transparent;
+    border-radius: 0;
+  }
+
+  .menu a:hover {
+    background: none;
+    border-bottom-color: var(--c-mute-dark);
+  }
+
+  .menu a.ativo {
+    background: none;
+    border-bottom-color: var(--c-star);
+    color: inherit;
+  }
+}

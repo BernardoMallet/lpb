@@ -45,6 +45,20 @@ const ICONS = {
     fill: true,
     d: 'M12 2l3 6.5 7 .8-5.2 4.8 1.5 7-6.3-3.6L5.7 21l1.5-7L2 9.3l7-.8z',
   },
+  user: { d: 'M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 3a4 4 0 1 0 0 8 4 4 0 0 0 0-8z' },
+  logout: { d: 'M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9' },
+  chevron: { d: 'M6 9l6 6 6-6' },
+  alert: {
+    d: 'M12 9v4M12 17h.01M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z',
+  },
+  info: { d: 'M12 16v-4M12 8h.01M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z' },
+  check: { d: 'M5 13l4 4L19 7' },
+  lock: { d: 'M5 11h14v10H5zM8 11V7a4 4 0 0 1 8 0v4' },
+  news: { d: 'M4 4h13v16H4zM17 8h3v11a1 1 0 0 1-1 1h-2M8 8h5M8 12h5M8 16h3' },
+  key: {
+    d: 'M15.5 7.5l3 3L22 7l-3-3-3.5 3.5zM12.4 11.6a5 5 0 1 1-7 7 5 5 0 0 1 7-7zM12.4 11.6l3.1-3.1',
+  },
+  ban: { d: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM5.6 5.6l12.8 12.8' },
 } satisfies Record<string, IconDef>;
 
 export type IconName = keyof typeof ICONS;

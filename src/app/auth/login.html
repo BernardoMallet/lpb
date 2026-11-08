@@ -1,0 +1,116 @@
+<div class="pagina">
+  <div class="stripes" aria-hidden="true"></div>
+
+  <header class="topo container">
+    <div class="marca">
+      <app-avatar src="images/logo.jpg" [name]="nome" [size]="44" />
+      <span>{{ nome }}</span>
+    </div>
+    <a class="voltar-site" [routerLink]="rotaSite">Voltar ao site</a>
+  </header>
+
+  <main class="principal" id="conteudo">
+    <app-card variant="poster" class="cartao">
+      @if (etapa() === 'credenciais') {
+        <form class="conteudo" novalidate (submit)="$event.preventDefault(); continuar()">
+          <div>
+            <p class="eyebrow">Área do sócio</p>
+            <h1>Entrar</h1>
+          </div>
+
+          @if (expirou()) {
+            <app-alert kind="info">Sua sessão expirou. Entre de novo para continuar.</app-alert>
+          }
+          @if (alertaGeral(); as mensagem) {
+            <app-alert kind="erro">{{ mensagem }}</app-alert>
+          }
+
+          <app-input
+            #campoEmail
+            label="E-mail"
+            type="email"
+            autocomplete="email"
+            inputmode="email"
+            [formControl]="email"
+            [error]="errosCred().email ?? null"
+          />
+          <app-input
+            #campoSenha
+            label="Senha"
+            type="password"
+            autocomplete="current-password"
+            [formControl]="senha"
+            [error]="errosCred().senha ?? null"
+          />
+
+          <button
+            app-button
+            type="submit"
+            variant="dark"
+            size="lg"
+            block
+            [loading]="carregando()"
+            [disabled]="espera.restante() > 0"
+          >
+            @if (carregando()) {
+              Verificando…
+            } @else if (espera.restante() > 0) {
+              Aguarde {{ mmss(espera.restante()) }}
+            } @else {
+              Continuar
+            }
+          </button>
+        </form>
+      } @else {
+        <form class="conteudo" novalidate (submit)="$event.preventDefault(); confirmar()">
+          <div>
+            <p class="eyebrow">Passo 2 de 2</p>
+            <h1>Confirme o código</h1>
+          </div>
+
+          <p class="intro">
+            Enviamos um código de 6 dígitos para <strong>{{ emailMascarado() }}</strong
+            >. Ele vale por {{ minutos() }} {{ minutos() === 1 ? 'minuto' : 'minutos' }}.
+          </p>
+
+          @if (avisoCodigo(); as aviso) {
+            <app-alert kind="info">{{ aviso }}</app-alert>
+          }
+
+          <app-input
+            #campoCodigo
+            label="Código de 6 dígitos"
+            hint="Digite ou cole o código recebido."
+            otp
+            [formControl]="codigo"
+            [error]="erroCodigo()"
+          />
+
+          <button
+            app-button
+            type="submit"
+            variant="dark"
+            size="lg"
+            block
+            [loading]="carregando()"
+            [disabled]="codigoEncerrado()"
+          >
+            {{ carregando() ? 'Confirmando…' : 'Confirmar e entrar' }}
+          </button>
+          <button
+            app-button
+            type="button"
+            variant="outline"
+            block
+            [loading]="reenviando()"
+            [disabled]="reenvio.restante() > 0"
+            (click)="reenviar()"
+          >
+            {{ rotuloReenviar() }}
+          </button>
+          <button type="button" class="link" (click)="voltar()">Voltar e usar outro e-mail</button>
+        </form>
+      }
+    </app-card>
+  </main>
+</div>

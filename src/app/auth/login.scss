@@ -1,0 +1,90 @@
+:host {
+  display: block;
+}
+
+.pagina {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--c-paper);
+}
+
+.topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-block: 14px;
+}
+
+.marca {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font: 900 0.9rem/1.1 var(--font-display);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.voltar-site {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--c-black);
+  font-weight: 700;
+  text-underline-offset: 3px;
+}
+
+.principal {
+  display: grid;
+  flex: 1;
+  justify-items: center;
+  align-items: start;
+  padding: 16px var(--gutter) 56px;
+}
+
+.cartao {
+  width: min(100%, 440px);
+}
+
+.conteudo {
+  display: grid;
+  gap: 18px;
+}
+
+h1 {
+  font-size: clamp(2rem, 7vw, 2.5rem);
+}
+
+.eyebrow {
+  margin-bottom: 10px;
+}
+
+.intro {
+  margin: 0;
+  color: var(--c-mute);
+}
+
+.intro strong {
+  color: var(--c-black);
+  word-break: break-all;
+}
+
+.link {
+  min-height: 44px;
+  padding: 0;
+  background: none;
+  border: 0;
+  color: var(--c-black);
+  font: 700 0.9375rem/1.2 var(--font-body);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+@media (max-width: 599px) {
+  .marca span {
+    max-width: 14ch;
+  }
+}

@@ -1,3 +1,5 @@
+import { isDevMode } from '@angular/core';
+
 export const SITE = {
   nome: 'Loucos Pelo Botafogo',
   // [CONFIRMAR] domínio final da landing page (usado em canonical, Open Graph e JSON-LD)
@@ -11,6 +13,18 @@ export const SITE = {
 export const ROTAS = {
   entrar: '/entrar', // [CONFIRMAR] rota real do sistema
   sejaSocio: '/seja-socio', // [CONFIRMAR] rota real do sistema
+  minhaConta: '/minha-conta',
+  noticias: '/noticias',
+  caravanas: '/caravanas',
+  permissoes: '/permissoes',
+  cpfsBloqueados: '/cpfs-bloqueados',
+  semAcesso: '/sem-acesso',
+  aposLogin: '/noticias',
+} as const;
+
+export const API = {
+  // [CONFIRMAR] a URL da API em produção ainda não existe; vazio = mesma origem do site
+  url: isDevMode() ? 'http://localhost:8080' : '',
 } as const;
 
 export const LINKS = {

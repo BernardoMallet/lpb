@@ -16,6 +16,8 @@ export const ROTAS = {
   minhaConta: '/minha-conta',
   noticias: '/noticias',
   caravanas: '/caravanas',
+  minhasCompras: '/minhas-compras',
+  aprovacoes: '/aprovacoes',
   permissoes: '/permissoes',
   cpfsBloqueados: '/cpfs-bloqueados',
   semAcesso: '/sem-acesso',

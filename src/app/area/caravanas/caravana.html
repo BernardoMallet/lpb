@@ -1,0 +1,121 @@
+<section class="section">
+  <div class="container">
+    <a class="voltar" [routerLink]="rotas.caravanas"><app-icon name="prev" /> Todas as caravanas</a>
+
+    @if (carregando()) {
+      <div class="esqueleto" aria-busy="true">
+        <app-skeleton width="60%" height="40px" />
+        <app-skeleton width="100%" height="320px" />
+      </div>
+    } @else if (erro(); as mensagem) {
+      <app-alert kind="erro">
+        {{ mensagem }}
+        <button app-button type="button" variant="outline" (click)="recarregar()">Tentar de novo</button>
+      </app-alert>
+    } @else if (caravana(); as c) {
+      <header class="topo">
+        <p class="eyebrow">Caravana</p>
+        <h1 #titulo tabindex="-1">{{ c.gameName }}</h1>
+        <p class="lead">
+          Saída de {{ c.municipalityName }}/{{ c.state }} em {{ dataEHoraCompletas(c.departsAt) }}
+        </p>
+      </header>
+
+      @if (podeGerir()) {
+        <app-tabs label="Seções da caravana" prefix="caravana" [tabs]="abas()" [(active)]="aba" />
+      }
+
+      @if (aba() === 'vaga') {
+        <div
+          class="palco"
+          id="caravana-painel-vaga"
+          [attr.role]="podeGerir() ? 'tabpanel' : null"
+          [attr.aria-labelledby]="podeGerir() ? 'caravana-aba-vaga' : null"
+        >
+          <app-bus-map
+            [total]="c.totalSeats"
+            [occupied]="c.occupiedSeats"
+            [mine]="minhaVaga()"
+            [canPick]="situacao() === 'disponivel'"
+            (pick)="reservar()"
+          />
+
+          <aside class="painel" aria-labelledby="painel-titulo">
+            <h2 id="painel-titulo">Sua vaga</h2>
+
+            <dl class="dados">
+              <div>
+                <dt>Vagas livres</dt>
+                <dd>{{ c.availableSeats }} de {{ c.totalSeats }}</dd>
+              </div>
+              <div>
+                <dt>Vendas até</dt>
+                <dd>{{ dataEHoraCompletas(c.salesDeadline) }}</dd>
+              </div>
+              <div>
+                <dt>Preço para você</dt>
+                <dd>{{ papel() === 'PRESIDENTE' ? 'Grátis' : moeda(c.price) }}</dd>
+              </div>
+            </dl>
+
+            @if (c.description) {
+              <p class="descricao">{{ c.description }}</p>
+            }
+
+            @if (erroAcao(); as mensagem) {
+              <app-alert kind="erro">{{ mensagem }}</app-alert>
+            }
+
+            @switch (situacao()) {
+              @case ('checkout') {
+                @if (pedidoAtivo(); as pedido) {
+                  <app-checkout-vaga [orderId]="pedido" (pago)="aoPagar()" (encerrado)="aoEncerrar()" />
+                }
+              }
+              @case ('paga') {
+                <app-alert kind="ok">
+                  <strong>Vaga garantida.</strong> Salve o comprovante em Minhas compras.
+                </app-alert>
+                <a app-button variant="dark" block [routerLink]="rotas.minhasCompras">
+                  <app-icon name="receipt" /> Ver Minhas compras
+                </a>
+              }
+              @case ('cancelada') {
+                <app-alert kind="info">Esta caravana foi cancelada.</app-alert>
+              }
+              @case ('confirmada') {
+                <app-alert kind="info">Caravana confirmada. As vendas estão encerradas.</app-alert>
+              }
+              @case ('pedido-pendente') {
+                <app-alert kind="info">
+                  Pedido de vaga grátis enviado. Aguarde a decisão: ela aparece nesta página.
+                </app-alert>
+              }
+              @case ('esgotada') {
+                <app-alert kind="info">Vagas esgotadas.</app-alert>
+              }
+              @case ('encerrada') {
+                <app-alert kind="info">As vendas desta caravana foram encerradas.</app-alert>
+              }
+              @default {
+                <button app-button type="button" variant="primary" block [loading]="enviando()" (click)="reservar()">
+                  {{ rotuloReservar() }}
+                </button>
+                @if (papel() === 'DIRETOR') {
+                  <button app-button type="button" variant="outline" block [loading]="enviando()" (click)="comprar()">
+                    Comprar vaga · {{ moeda(c.price) }}
+                  </button>
+                }
+                <p class="nota">A vaga fica reservada por tempo limitado até o pagamento.</p>
+              }
+            }
+          </aside>
+        </div>
+      } @else {
+        <div id="caravana-painel-gestao" role="tabpanel" aria-labelledby="caravana-aba-gestao">
+          <app-gestao-caravana [caravana]="c" (atualizada)="atualizar($event)" />
+        </div>
+      }
+    }
+  </div>
+</section>

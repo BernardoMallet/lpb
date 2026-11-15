@@ -12,7 +12,7 @@ import {
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Field } from './field';
 
-export type InputType = 'text' | 'email' | 'password' | 'tel';
+export type InputType = 'text' | 'email' | 'password' | 'tel' | 'datetime-local';
 
 let proximo = 0;
 
@@ -28,24 +28,40 @@ let proximo = 0;
   template: `
     <app-field [label]="label()" [forId]="id" [hint]="hint()" [error]="error()">
       <div class="caixa" [class.invalido]="!!error()" [class.desabilitado]="desabilitado()">
-        <input
-          #el
-          class="campo"
-          [class.otp]="otp()"
-          [id]="id"
-          [type]="tipoEfetivo()"
-          [value]="valor()"
-          [disabled]="desabilitado()"
-          [readOnly]="readonly()"
-          [attr.autocomplete]="autocompletar()"
-          [attr.inputmode]="modo()"
-          [attr.aria-invalid]="error() ? 'true' : null"
-          [attr.aria-describedby]="descricao()"
-          spellcheck="false"
-          autocapitalize="none"
-          (input)="aoDigitar($event)"
-          (blur)="aoSair()"
-        />
+        @if (linhas() > 0) {
+          <textarea
+            #el
+            class="campo area"
+            [id]="id"
+            [rows]="linhas()"
+            [value]="valor()"
+            [disabled]="desabilitado()"
+            [attr.maxlength]="maxlength()"
+            [attr.aria-invalid]="error() ? 'true' : null"
+            [attr.aria-describedby]="descricao()"
+            (input)="aoDigitar($event)"
+            (blur)="aoSair()"
+          ></textarea>
+        } @else {
+          <input
+            #el
+            class="campo"
+            [class.otp]="otp()"
+            [id]="id"
+            [type]="tipoEfetivo()"
+            [value]="valor()"
+            [disabled]="desabilitado()"
+            [readOnly]="readonly()"
+            [attr.autocomplete]="autocompletar()"
+            [attr.inputmode]="modo()"
+            [attr.aria-invalid]="error() ? 'true' : null"
+            [attr.aria-describedby]="descricao()"
+            spellcheck="false"
+            autocapitalize="none"
+            (input)="aoDigitar($event)"
+            (blur)="aoSair()"
+          />
+        }
         @if (type() === 'password') {
           <button
             type="button"
@@ -95,6 +111,12 @@ let proximo = 0;
       font: inherit;
       font-size: 1rem;
     }
+    .campo.area {
+      min-height: 120px;
+      padding: 12px 14px;
+      line-height: 1.5;
+      resize: vertical;
+    }
     .campo.otp {
       font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
       font-size: 1.5rem;
@@ -127,13 +149,16 @@ export class Input implements ControlValueAccessor {
   readonly inputmode = input<string | null>(null);
   readonly mascara = input<'cpf' | 'cep' | null>(null);
   readonly readonly = input(false, { transform: booleanAttribute });
+  /** Maior que zero troca o campo por uma área de texto com essa quantidade de linhas. */
+  readonly linhas = input(0);
+  readonly maxlength = input<number | null>(null);
 
   protected readonly id = `app-input-${++proximo}`;
   protected readonly valor = signal('');
   protected readonly desabilitado = signal(false);
   protected readonly visivel = signal(false);
 
-  private readonly el = viewChild<ElementRef<HTMLInputElement>>('el');
+  private readonly el = viewChild<ElementRef<HTMLInputElement | HTMLTextAreaElement>>('el');
   private onChange: (v: string) => void = () => {};
   private onTouched: () => void = () => {};
 
@@ -154,7 +179,7 @@ export class Input implements ControlValueAccessor {
   }
 
   protected aoDigitar(evento: Event): void {
-    const campo = evento.target as HTMLInputElement;
+    const campo = evento.target as HTMLInputElement | HTMLTextAreaElement;
     let v = this.otp() ? campo.value.replace(/\D/g, '').slice(0, 6) : campo.value;
     if (this.mascara() === 'cpf') {
       v = v.replace(/\D/g, '').slice(0, 11)

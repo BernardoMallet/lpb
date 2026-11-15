@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Caravanas · Opção A — Grade de cards + modal único em seções</title>
+<style>
+:root{--ink:#0a0a0a;--graphite:#262626;--white:#fff;--paper:#f4f4f2;--mute:#5c5c5c;--star:#f5c518;--danger:#b3261e;--success:#1b6e3c;--font:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;--display:"Arial Black",Impact,Arial,sans-serif;--r-sm:6px;--r-md:14px;--shadow:6px 6px 0 var(--ink)}
+*{box-sizing:border-box}body{margin:0;background:#dcdcd8;color:var(--ink);font:16px/1.5 var(--font)}
+h1,h2,h3,h4{font-family:var(--display);text-transform:uppercase;line-height:1.1;margin:0}p{margin:0}
+.page{max-width:1240px;margin:auto;padding:16px}.stripes{height:14px;background:repeating-linear-gradient(90deg,#0a0a0a 0 28px,#fff 28px 56px)}
+.eyebrow{font-weight:800;letter-spacing:.1em;text-transform:uppercase;font-size:.75rem}.muted{color:var(--mute);font-size:.875rem}
+.intro h1{font-size:clamp(1.5rem,3vw,2.2rem);margin:6px 0 8px}.pros{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin:12px 0}
+.note{background:#fff;border:2px solid var(--ink);padding:12px;border-radius:var(--r-sm);font-size:.875rem}.note b{display:block;margin-bottom:4px}
+.stack{display:grid;gap:28px;margin-top:20px}.stack>section>h2{font-size:1rem;margin-bottom:8px}
+.frame{background:var(--paper);border:2px solid var(--ink);overflow:hidden}.f-d{max-width:1160px}.f-t{max-width:768px}.f-m{max-width:375px}
+.hdr{background:var(--ink);color:#fff;display:flex;align-items:center;gap:14px;padding:0 16px;height:64px}
+.logo{width:40px;height:40px;border-radius:50%;background:#fff;color:var(--ink);display:grid;place-items:center;font-weight:900;flex:none}
+.hdr nav{display:flex;gap:22px;margin:0 auto 0 12px;font-weight:700}.hdr nav a{padding:20px 2px 17px;border-bottom:3px solid transparent;color:#fff}.hdr nav a.on{border-color:var(--star)}
+.burger{width:44px;height:44px;border:2px solid #fff;border-radius:50%;display:grid;place-items:center;flex:none}.av{width:40px;height:40px;border-radius:50%;background:var(--star);color:var(--ink);display:grid;place-items:center;font-weight:900;font-size:.85rem;margin-left:auto;flex:none}
+.body{padding:20px}.f-m .body{padding:16px}
+.top{display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap;margin-bottom:16px}.top h2{font-size:1.5rem}
+.chips{display:flex;gap:8px;flex-wrap:wrap}.chip{min-height:36px;padding:0 14px;border:2px solid var(--ink);border-radius:99px;background:#fff;display:inline-flex;align-items:center;font-weight:700;font-size:.85rem}.chip.on{background:var(--ink);color:#fff}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 18px;border-radius:var(--r-sm);border:2px solid var(--ink);background:var(--ink);color:#fff;font-weight:800;font-size:.95rem}.btn.star{background:var(--star);color:var(--ink)}.btn.ghost{background:#fff;color:var(--ink)}.btn.block{display:flex;width:100%}
+.grid{display:grid;gap:16px}.f-d .grid{grid-template-columns:repeat(3,1fr)}.f-t .grid{grid-template-columns:repeat(2,1fr)}.f-m .grid{grid-template-columns:1fr}
+.card{background:#fff;border:2px solid var(--ink);border-radius:var(--r-md);overflow:hidden;display:flex;flex-direction:column}
+.create{border-style:dashed;background:transparent;align-items:center;justify-content:center;text-align:center;gap:8px;padding:24px;min-height:260px}.create .plus{width:56px;height:56px;border-radius:50%;background:var(--star);border:2px solid var(--ink);display:grid;place-items:center;font:900 1.8rem/1 var(--display)}
+.cover{aspect-ratio:16/9;background:linear-gradient(135deg,#0a0a0a 0 44%,#fff 44% 56%,#0a0a0a 56%);display:grid;place-items:center;position:relative}.cover span{background:var(--ink);color:var(--star);font:900 .95rem/1.1 var(--display);text-transform:uppercase;padding:5px 10px;text-align:center}
+.pos{position:absolute;top:10px;left:10px}.badge{display:inline-block;font-size:.7rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:99px;border:2px solid var(--ink);background:#fff}.badge.star{background:var(--star)}.badge.dark{background:var(--ink);color:#fff}.badge.bad{border-color:var(--danger);color:var(--danger)}
+.cb{padding:14px;display:grid;gap:8px;flex:1}.cb h3{font-size:1rem}.price{font-weight:800;font-size:1.15rem}.price small{font-weight:400;color:var(--mute);font-size:.75rem}
+.bar{height:8px;border:2px solid var(--ink);border-radius:99px;background:#fff;overflow:hidden}.bar i{display:block;height:100%;background:var(--ink)}
+.lbl{display:block;font-weight:700;font-size:.875rem;margin:10px 0 4px}.inp{display:flex;align-items:center;min-height:44px;border:2px solid var(--ink);border-radius:var(--r-sm);padding:0 10px;background:#fff;color:var(--mute);font-size:.9rem}.inp.err{border-color:var(--danger)}.errtxt{color:var(--danger);font-size:.8rem;font-weight:700;margin-top:4px}.hint{font-size:.78rem;color:var(--mute);margin-top:4px}
+.drop{border:2px dashed var(--ink);border-radius:var(--r-sm);min-height:96px;display:grid;place-items:center;text-align:center;padding:10px;background:var(--paper);font-size:.875rem}
+.scrim{background:rgba(10,10,10,.65);padding:20px;display:grid;place-items:center;min-height:300px}.scrim.sheetwrap{padding:56px 0 0;align-items:end}
+.modal{background:#fff;border:2px solid var(--ink);border-radius:var(--r-md);box-shadow:var(--shadow);width:100%}.modal.sheet{border-radius:var(--r-md) var(--r-md) 0 0;border-bottom:0;box-shadow:none}
+.mh{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;border-bottom:2px solid var(--ink)}.mh h3{font-size:1.05rem}.x{width:44px;height:44px;display:grid;place-items:center;font-weight:900;font-size:1.2rem}
+.mb{padding:2px 20px 16px}.mf{display:flex;gap:10px;justify-content:flex-end;padding:14px 20px;border-top:2px solid var(--ink)}.f-m .mf{flex-direction:column-reverse}
+.sec{font:900 .8rem var(--display);text-transform:uppercase;letter-spacing:.05em;margin:16px 0 0;padding-bottom:4px;border-bottom:2px solid var(--ink)}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}.f-m .cols,.f-t .cols.t1{grid-template-columns:1fr}
+.states{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;margin-top:8px}.state{background:#fff;border:2px solid var(--ink);padding:12px;border-radius:var(--r-sm);font-size:.875rem}.state h4{font-size:.85rem;margin-bottom:8px}
+.skel{background:linear-gradient(90deg,#e5e5e2,#f1f1ee,#e5e5e2);height:14px;border-radius:4px;margin:8px 0}.alert{border-left:4px solid var(--danger);background:#fff;padding:10px;color:var(--danger);font-weight:700}
+</style>
+</head>
+<body><div class="stripes"></div>
+<div class="page">
+<div class="intro"><p class="eyebrow">Rascunho descartável · Caravanas · opção A</p><h1>A: Grade de cards + modal único em seções</h1>
+<p>Cards em grade, “Criar caravana” como primeiro card (só quem tem permissão). Modal único com o formulário inteiro numa rolagem, dividido em seções com título.</p>
+<div class="pros">
+<div class="note"><b>Quando escolher</b>Poucas caravanas por vez (dezenas, não centenas) e quem cria já conhece todos os campos.</div>
+<div class="note"><b>Trade-offs</b>+ Menor esforço: um modal, um formulário. + Familiar. − Formulário longo no celular (11 campos em rolagem). − Sem prévia do card.</div>
+<div class="note"><b>Componentes do design system</b>Button, Card, Modal, Input, Select, Skeleton, EmptyState, Toast, Alert. Nada novo, exceto: Modal ganha <code>size="lg"</code> (retrocompatível; hoje fixo em 480px) e o Input ganha a variante de upload de capa.</div>
+<div class="note"><b>Acessibilidade</b>Ordem de foco: filtros, “Criar caravana”, cards. Card inteiro é um link (nome da caravana) e ESGOTADA aparece em texto, não só cor. Modal em &lt;dialog&gt;: foco preso, Esc fecha, foco volta ao botão de origem. Erros do servidor junto ao campo e em alerta com <code>role="alert"</code>. Alvos ≥ 44 px.</div>
+</div></div>
+
+<div class="stack">
+<section><h2>Desktop · listagem</h2><div class="frame f-d">
+<div class="hdr"><div class="logo">★</div><b>LOUCOS PELO BOTAFOGO</b><nav><a>Notícias</a><a class="on">Caravanas</a><a>Permissões</a><a>CPFs bloqueados</a></nav><div class="av">BM</div></div>
+<div class="body"><div class="top"><div><p class="eyebrow">Próximas saídas</p><h2>Caravanas</h2></div><div class="chips"><span class="chip on">Abertas</span><span class="chip">Esgotadas</span><span class="chip">Confirmadas</span><span class="chip">Canceladas</span></div></div>
+<div class="grid">
+<article class="card create"><span class="plus">+</span><h3>Criar caravana</h3><p class="muted">Cadastre jogo, local, preço e vagas.</p><span class="btn star">Criar caravana</span></article>
+<article class="card"><div class="cover"><span>Botafogo x Palmeiras</span></div><div class="cb"><h3>Botafogo x Palmeiras</h3><p class="muted">São Paulo/SP · sáb, 06/12 · saída 05:30</p><div class="bar"><i style="width:67%"></i></div><p class="muted">15 vagas livres de 46</p><p class="price">R$ 85,00 <small>seu preço</small></p><span class="btn block">Ver caravana</span></div></article>
+<article class="card"><div class="cover"><span>Botafogo x Corinthians</span><span class="badge star pos">ESGOTADA</span></div><div class="cb"><h3>Botafogo x Corinthians</h3><p class="muted">São Paulo/SP · dom, 14/12 · saída 06:00</p><div class="bar"><i style="width:100%"></i></div><p class="muted">0 vagas livres de 46</p><p class="price">R$ 85,00 <small>seu preço</small></p><span class="btn block ghost">Ver caravana</span></div></article>
+<article class="card"><div class="cover"><span>Botafogo x Cruzeiro</span></div><div class="cb"><h3>Botafogo x Cruzeiro</h3><p class="muted">Belo Horizonte/MG · sáb, 20/12 · saída 04:00</p><div class="bar"><i style="width:22%"></i></div><p class="muted">36 vagas livres de 46</p><p class="price">R$ 110,00 <small>seu preço (não-sócio)</small></p><span class="btn block">Ver caravana</span></div></article>
+</div></div></div></section>
+
+<section><h2>Tablet · listagem</h2><div class="frame f-t">
+<div class="hdr"><div class="burger">≡</div><b>LOUCOS PELO BOTAFOGO</b><div class="av">BM</div></div>
+<div class="body"><div class="top"><h2>Caravanas</h2></div><div class="chips" style="margin-bottom:16px"><span class="chip on">Abertas</span><span class="chip">Esgotadas</span><span class="chip">Confirmadas</span></div>
+<div class="grid">
+<article class="card create"><span class="plus">+</span><h3>Criar caravana</h3><span class="btn star">Criar caravana</span></article>
+<article class="card"><div class="cover"><span>Botafogo x Palmeiras</span></div><div class="cb"><h3>Botafogo x Palmeiras</h3><p class="muted">São Paulo/SP · sáb, 06/12 · 05:30</p><p class="muted">15 vagas livres de 46</p><p class="price">R$ 85,00</p><span class="btn block">Ver caravana</span></div></article>
+<article class="card"><div class="cover"><span>Botafogo x Corinthians</span><span class="badge star pos">ESGOTADA</span></div><div class="cb"><h3>Botafogo x Corinthians</h3><p class="muted">São Paulo/SP · dom, 14/12 · 06:00</p><p class="muted">0 vagas livres de 46</p><p class="price">R$ 85,00</p><span class="btn block ghost">Ver caravana</span></div></article>
+</div></div></div></section>
+
+<section><h2>Celular · listagem</h2><div class="frame f-m">
+<div class="hdr"><div class="burger">≡</div><div class="av">BM</div></div>
+<div class="body"><h2 style="font-size:1.3rem;margin-bottom:12px">Caravanas</h2><div class="chips" style="margin-bottom:14px"><span class="chip on">Abertas</span><span class="chip">Esgotadas</span></div>
+<div class="grid">
+<span class="btn star block">+ Criar caravana</span>
+<article class="card"><div class="cover"><span>Botafogo x Palmeiras</span></div><div class="cb"><h3>Botafogo x Palmeiras</h3><p class="muted">São Paulo/SP · sáb, 06/12 · 05:30</p><p class="muted">15 vagas livres de 46</p><p class="price">R$ 85,00 <small>seu preço</small></p><span class="btn block">Ver caravana</span></div></article>
+<article class="card"><div class="cover"><span>Botafogo x Corinthians</span><span class="badge star pos">ESGOTADA</span></div><div class="cb"><h3>Botafogo x Corinthians</h3><p class="muted">São Paulo/SP · dom, 14/12 · 06:00</p><p class="price">R$ 85,00</p><span class="btn block ghost">Ver caravana</span></div></article>
+</div></div></div>
+<p class="muted" style="margin-top:6px">No celular o “Criar caravana” vira botão no topo da lista, para não ocupar um card inteiro.</p></section>
+
+<section><h2>Modal de criação · desktop (Modal size lg)</h2><div class="frame f-d"><div class="scrim"><div class="modal" style="max-width:720px">
+<div class="mh"><h3>Criar caravana</h3><span class="x">×</span></div><div class="mb">
+<p class="sec">Capa</p><span class="lbl">Imagem de capa</span><div class="drop"><div><b>Selecionar imagem</b><br>JPG, PNG ou WebP · até 5 MB · será redimensionada e sem metadados (EXIF)</div></div>
+<p class="sec">Jogo e local</p><div class="cols"><div style="grid-column:1/-1"><span class="lbl">Jogo</span><div class="inp">Botafogo x Palmeiras</div><p class="hint">Até 100 caracteres</p></div><div><span class="lbl">UF</span><div class="inp">SP ▾</div></div><div><span class="lbl">Município</span><div class="inp">São Paulo ▾</div></div></div>
+<p class="sec">Datas</p><div class="cols"><div><span class="lbl">Partida (saída do ônibus)</span><div class="inp">06/12/2026 05:30</div></div><div><span class="lbl">Data limite de vendas</span><div class="inp err">07/12/2026 23:59</div><p class="errtxt">Deve ser até o horário de partida.</p></div></div>
+<p class="sec">Preços e vagas</p><div class="cols"><div><span class="lbl">Preço-base (R$)</span><div class="inp">85,00</div><p class="hint">0 = vaga grátis. Acima de 0, mínimo definido nas configurações.</p></div><div><span class="lbl">Preço do não-sócio (calculado)</span><div class="inp" style="background:var(--paper)">R$ 110,50</div><p class="hint">Acréscimo definido nas configurações. Valor de exemplo.</p></div><div><span class="lbl">Total de vagas</span><div class="inp">46</div></div><div><span class="lbl">Máximo de parcelas no cartão</span><div class="inp">1x (padrão) ▾</div></div></div>
+<p class="sec">Descrição</p><div class="inp" style="min-height:84px;align-items:start;padding-top:10px">Saída da sede às 05:30, retorno após o jogo. Texto simples, sem formatação.</div><p class="hint">78 de 2000 caracteres</p>
+</div><div class="mf"><span class="btn ghost">Cancelar</span><span class="btn">Criar caravana</span></div></div></div></div></section>
+
+<section><h2>Modal de criação · tablet e celular (celular: folha de baixo)</h2>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;align-items:start">
+<div class="frame f-t"><div class="scrim"><div class="modal"><div class="mh"><h3>Criar caravana</h3><span class="x">×</span></div><div class="mb"><p class="sec">Capa</p><div class="drop">Selecionar imagem · JPG, PNG, WebP · até 5 MB</div><p class="sec">Jogo e local</p><div class="cols t1"><div><span class="lbl">Jogo</span><div class="inp">Botafogo x Palmeiras</div></div><div><span class="lbl">UF</span><div class="inp">SP ▾</div></div><div><span class="lbl">Município</span><div class="inp">São Paulo ▾</div></div></div><p class="muted" style="margin-top:8px">… seções seguintes iguais ao desktop, em 1 coluna.</p></div><div class="mf"><span class="btn ghost">Cancelar</span><span class="btn">Criar caravana</span></div></div></div></div>
+<div class="frame f-m"><div class="scrim sheetwrap"><div class="modal sheet"><div class="mh"><h3>Criar caravana</h3><span class="x">×</span></div><div class="mb"><p class="sec">Capa</p><div class="drop">Selecionar imagem</div><p class="sec">Jogo e local</p><span class="lbl">Jogo</span><div class="inp">Botafogo x Palmeiras</div><span class="lbl">UF</span><div class="inp">SP ▾</div><p class="muted" style="margin-top:8px">… rolagem interna do corpo; rodapé fixo.</p></div><div class="mf"><span class="btn block">Criar caravana</span><span class="btn block ghost">Cancelar</span></div></div></div></div>
+</div></section>
+
+<section><h2>Estados</h2><div class="states">
+<div class="state"><h4>Carregando</h4><div class="skel" style="height:90px"></div><div class="skel" style="width:70%"></div><div class="skel" style="width:40%"></div><p class="muted">Skeleton com o formato do card; 6 placeholders.</p></div>
+<div class="state"><h4>Vazio</h4><p><b>Nenhuma caravana aberta.</b></p><p class="muted">Quem tem permissão vê “Criar caravana”; os demais, apenas o aviso.</p></div>
+<div class="state"><h4>Erro de carga</h4><div class="alert" role="alert">Não foi possível carregar as caravanas.</div><p style="margin-top:8px"><span class="btn ghost">Tentar de novo</span></p></div>
+<div class="state"><h4>Erro no modal (422/409)</h4><div class="alert">UF e município não conferem com o IBGE.</div><p class="muted" style="margin-top:6px">Erro por campo quando o servidor indica. Regras de negócio (ex.: <code>DEADLINE_AFTER_DEPARTURE</code>) aparecem como alerta no topo do modal.</p></div>
+<div class="state"><h4>Enviando</h4><p>Botão “Criando…” desabilitado (anti duplo envio). Modal não fecha até terminar.</p></div>
+<div class="state"><h4>Sem permissão</h4><p class="muted">Sem <code>PERM_CARAVAN_CREATE</code>, o card “Criar caravana” não existe. O servidor ainda decide (403).</p></div>
+</div></section>
+</div></div></body></html>

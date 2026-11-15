@@ -6,7 +6,7 @@ import {
   input,
 } from '@angular/core';
 
-export type ButtonVariant = 'primary' | 'dark' | 'outline' | 'outline-light';
+export type ButtonVariant = 'primary' | 'dark' | 'outline' | 'outline-light' | 'danger';
 export type ButtonSize = 'md' | 'lg';
 
 /** Único botão do projeto. Uso: <a app-button variant="primary"> ou <button app-button>. */

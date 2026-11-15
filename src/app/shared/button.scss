@@ -67,6 +67,16 @@
   color: var(--c-black);
 }
 
+:host(.v-danger) {
+  background: var(--c-danger);
+  color: var(--c-white);
+}
+:host(.v-danger:hover) {
+  background: var(--c-white);
+  border-color: var(--c-danger);
+  color: var(--c-danger);
+}
+
 :host(:hover) {
   transform: translateY(-1px);
 }

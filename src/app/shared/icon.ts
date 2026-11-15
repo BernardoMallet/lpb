@@ -59,6 +59,10 @@ const ICONS = {
     d: 'M15.5 7.5l3 3L22 7l-3-3-3.5 3.5zM12.4 11.6a5 5 0 1 1-7 7 5 5 0 0 1 7-7zM12.4 11.6l3.1-3.1',
   },
   ban: { d: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM5.6 5.6l12.8 12.8' },
+  plus: { d: 'M12 5v14M5 12h14' },
+  download: { d: 'M12 3v12M7 10l5 5 5-5M4 21h16' },
+  receipt: { d: 'M6 3h12v18l-3-2-3 2-3-2-3 2V3zM9 8h6M9 12h6' },
+  inbox: { d: 'M3 13l3-8h12l3 8v6H3v-6zM3 13h5l1 3h6l1-3h5' },
 } satisfies Record<string, IconDef>;
 
 export type IconName = keyof typeof ICONS;

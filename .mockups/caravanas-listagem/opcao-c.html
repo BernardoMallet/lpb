@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Caravanas · Opção C — Destaque da próxima saída + modal com prévia</title>
+<link rel="stylesheet" href="../_base.css">
+<style>
+.hero{display:grid;grid-template-columns:1.2fr 1fr;background:var(--ink);color:#fff;border:2px solid var(--ink);border-radius:var(--r-md);overflow:hidden;margin-bottom:20px}
+.hero .cover{aspect-ratio:auto;min-height:240px}.hero .hb{padding:20px;display:grid;gap:10px;align-content:center}.hero h3{font-size:1.5rem;color:var(--star)}.hero .muted{color:#b8b8b8}.hero .price{color:#fff}
+.f-t .hero,.f-m .hero{grid-template-columns:1fr}.f-m .hero .cover{min-height:160px}
+.fab{position:sticky;bottom:12px;display:flex;justify-content:flex-end;margin-top:12px}.fab .btn{box-shadow:var(--shadow)}
+.mini{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.f-t .mini{grid-template-columns:repeat(2,1fr)}.f-m .mini{grid-template-columns:1fr}
+.split{display:grid;grid-template-columns:1.2fr 1fr}.split .pv{background:var(--paper);border-left:2px solid var(--ink);padding:16px}
+.f-t .split,.f-m .split{grid-template-columns:1fr}
+.tabs{display:flex;border-bottom:2px solid var(--ink)}.tabs span{flex:1;text-align:center;padding:10px;font-weight:800;font-size:.8rem;text-transform:uppercase}.tabs .on{background:var(--ink);color:#fff}
+</style>
+</head>
+<body><div class="stripes"></div>
+<div class="page">
+<div class="intro"><p class="eyebrow">Rascunho descartável · Caravanas · opção C</p><h1>C: Próxima saída em destaque + modal com prévia ao vivo</h1>
+<p>A caravana mais próxima ocupa um bloco grande no topo; as demais vêm em cards menores. “Criar caravana” é um botão fixo no canto (flutuante, não consome espaço da grade). O Modal tem formulário à esquerda e prévia do card à direita; no celular a prévia vira uma aba.</p>
+<div class="pros">
+<div class="note"><b>Quando escolher</b>Quando o produto quer empurrar a próxima saída (conversão) e quem cria quer ver como o card ficará.</div>
+<div class="note"><b>Trade-offs</b>+ Maior apelo visual da próxima caravana. + Prévia reduz erro de capa e texto. − Mais trabalho (prévia reutiliza o Card). − Destaque pode confundir quando a próxima já está ESGOTADA (regra: destaca a próxima ABERTA). − Botão flutuante pode cobrir conteúdo no celular.</div>
+<div class="note"><b>Componentes do design system</b>Button, Card (reutilizado na prévia), Modal (size lg), Input, Select, Skeleton. Novo: bloco “destaque” (variante escura do Card) e abas dentro do Modal no celular.</div>
+<div class="note"><b>Acessibilidade</b>O destaque é um &lt;article&gt; com h3, sem repetir o card na grade. Botão flutuante com rótulo visível e fora da ordem principal só quando o foco chega ao fim da página (ordem DOM natural). Prévia marcada como <code>aria-hidden</code> (é redundante com o formulário). Abas no celular com <code>role="tablist"</code> e setas.</div>
+</div></div>
+
+<div class="stack">
+<section><h2>Desktop · listagem</h2><div class="frame f-d">
+<div class="hdr"><div class="logo">★</div><b>LOUCOS PELO BOTAFOGO</b><nav><a>Notícias</a><a class="on">Caravanas</a><a>Permissões</a><a>CPFs bloqueados</a></nav><div class="av">BM</div></div>
+<div class="body"><div class="top"><div><p class="eyebrow">Próxima saída</p><h2>Caravanas</h2></div><div class="chips"><span class="chip on">Abertas</span><span class="chip">Esgotadas</span><span class="chip">Confirmadas</span></div></div>
+<article class="hero"><div class="cover"><span>Botafogo x Palmeiras</span></div><div class="hb"><span class="badge star" style="justify-self:start">Sai em 21 dias</span><h3>Botafogo x Palmeiras</h3><p class="muted">São Paulo/SP · sáb, 06/12 · saída 05:30 · vendas até 05/12</p><div class="bar"><i style="width:67%"></i></div><p class="muted">15 vagas livres de 46</p><p class="price">R$ 85,00 <small style="color:#b8b8b8">seu preço</small></p><span class="btn star" style="justify-self:start">Ver caravana e pegar vaga</span></div></article>
+<div class="mini">
+<article class="card"><div class="cover"><span>Botafogo x Corinthians</span><span class="badge star pos">ESGOTADA</span></div><div class="cb"><h3>Botafogo x Corinthians</h3><p class="muted">São Paulo/SP · dom, 14/12 · 06:00</p><p class="muted">0 vagas livres de 46</p><p class="price">R$ 85,00</p><span class="btn block ghost">Ver caravana</span></div></article>
+<article class="card"><div class="cover"><span>Botafogo x Cruzeiro</span></div><div class="cb"><h3>Botafogo x Cruzeiro</h3><p class="muted">Belo Horizonte/MG · sáb, 20/12 · 04:00</p><p class="muted">36 vagas livres de 46</p><p class="price">R$ 110,00 <small>não-sócio</small></p><span class="btn block">Ver caravana</span></div></article>
+<article class="card"><div class="cover"><span>Botafogo x Grêmio</span></div><div class="cb"><h3>Botafogo x Grêmio</h3><p class="muted">Porto Alegre/RS · dom, 28/12 · 03:00</p><p class="muted">44 vagas livres de 46</p><p class="price">R$ 95,00</p><span class="btn block">Ver caravana</span></div></article>
+</div>
+<div class="fab"><span class="btn star">+ Criar caravana</span></div></div></div></section>
+
+<section><h2>Tablet · listagem</h2><div class="frame f-t">
+<div class="hdr"><div class="burger">≡</div><b>LOUCOS PELO BOTAFOGO</b><div class="av">BM</div></div>
+<div class="body"><h2 style="font-size:1.4rem;margin-bottom:14px">Caravanas</h2>
+<article class="hero"><div class="cover"><span>Botafogo x Palmeiras</span></div><div class="hb"><h3 style="font-size:1.25rem">Botafogo x Palmeiras</h3><p class="muted">São Paulo/SP · sáb, 06/12 · 05:30</p><p class="muted">15 vagas livres de 46</p><p class="price">R$ 85,00</p><span class="btn star">Ver caravana e pegar vaga</span></div></article>
+<div class="mini"><article class="card"><div class="cover"><span>Botafogo x Corinthians</span><span class="badge star pos">ESGOTADA</span></div><div class="cb"><h3>Botafogo x Corinthians</h3><p class="price">R$ 85,00</p><span class="btn block ghost">Ver caravana</span></div></article><article class="card"><div class="cover"><span>Botafogo x Cruzeiro</span></div><div class="cb"><h3>Botafogo x Cruzeiro</h3><p class="price">R$ 110,00</p><span class="btn block">Ver caravana</span></div></article></div>
+<div class="fab"><span class="btn star">+ Criar caravana</span></div></div></div></section>
+
+<section><h2>Celular · listagem</h2><div class="frame f-m">
+<div class="hdr"><div class="burger">≡</div><div class="av">BM</div></div>
+<div class="body"><h2 style="font-size:1.3rem;margin-bottom:12px">Caravanas</h2>
+<article class="hero"><div class="cover"><span>Botafogo x Palmeiras</span></div><div class="hb"><h3 style="font-size:1.1rem">Botafogo x Palmeiras</h3><p class="muted">São Paulo/SP · 06/12 · 05:30</p><p class="muted">15 vagas livres de 46</p><p class="price">R$ 85,00</p><span class="btn star block">Pegar vaga</span></div></article>
+<div class="mini"><article class="card"><div class="cover"><span>Botafogo x Corinthians</span><span class="badge star pos">ESGOTADA</span></div><div class="cb"><h3>Botafogo x Corinthians</h3><p class="price">R$ 85,00</p><span class="btn block ghost">Ver caravana</span></div></article></div>
+<div class="fab"><span class="btn star">+ Criar</span></div></div></div></section>
+
+<section><h2>Modal com prévia · desktop</h2><div class="frame f-d"><div class="scrim"><div class="modal" style="max-width:960px"><div class="mh"><h3>Criar caravana</h3><span class="x">×</span></div>
+<div class="split"><div class="mb"><span class="lbl">Imagem de capa</span><div class="drop">Selecionar imagem · JPG, PNG ou WebP · até 5 MB</div><span class="lbl">Jogo</span><div class="inp">Botafogo x Palmeiras</div><div class="cols"><div><span class="lbl">UF</span><div class="inp">SP ▾</div></div><div><span class="lbl">Município</span><div class="inp">São Paulo ▾</div></div><div><span class="lbl">Partida</span><div class="inp">06/12/2026 05:30</div></div><div><span class="lbl">Limite de vendas</span><div class="inp">05/12/2026 23:59</div></div><div><span class="lbl">Preço-base (R$)</span><div class="inp">85,00</div></div><div><span class="lbl">Preço do não-sócio</span><div class="inp" style="background:var(--paper)">R$ 110,50</div></div><div><span class="lbl">Total de vagas</span><div class="inp">46</div></div><div><span class="lbl">Máx. parcelas</span><div class="inp">1x ▾</div></div></div><span class="lbl">Descrição</span><div class="inp" style="min-height:64px;align-items:start;padding-top:10px">Saída da sede às 05:30.</div></div>
+<aside class="pv" aria-hidden="true"><p class="eyebrow" style="margin-bottom:8px">Prévia do card</p><article class="card"><div class="cover"><span>Botafogo x Palmeiras</span></div><div class="cb"><h3>Botafogo x Palmeiras</h3><p class="muted">São Paulo/SP · sáb, 06/12 · 05:30</p><p class="muted">46 vagas livres de 46</p><p class="price">R$ 85,00 <small>sócio</small></p></div></article><p class="muted" style="margin-top:8px">Atualiza enquanto você digita. A capa mostrada é a recorte 16:9.</p></aside></div>
+<div class="mf"><span class="btn ghost">Cancelar</span><span class="btn">Criar caravana</span></div></div></div></div></section>
+
+<section><h2>Modal com prévia · tablet e celular (prévia em aba)</h2>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;align-items:start">
+<div class="frame f-t"><div class="scrim"><div class="modal"><div class="mh"><h3>Criar caravana</h3><span class="x">×</span></div><div class="mb"><span class="lbl">Imagem de capa</span><div class="drop">Selecionar imagem</div><span class="lbl">Jogo</span><div class="inp">Botafogo x Palmeiras</div><div class="cols t1"><div><span class="lbl">UF</span><div class="inp">SP ▾</div></div><div><span class="lbl">Município</span><div class="inp">São Paulo ▾</div></div></div><p class="muted" style="margin-top:8px">… demais campos; prévia abaixo do formulário, recolhida.</p></div><div class="mf"><span class="btn ghost">Cancelar</span><span class="btn">Criar caravana</span></div></div></div></div>
+<div class="frame f-m"><div class="scrim sheetwrap"><div class="modal sheet"><div class="mh"><h3>Criar caravana</h3><span class="x">×</span></div><div class="tabs" role="tablist"><span class="on" role="tab">Dados</span><span role="tab">Prévia</span></div><div class="mb"><span class="lbl">Imagem de capa</span><div class="drop">Selecionar imagem</div><span class="lbl">Jogo</span><div class="inp">Botafogo x Palmeiras</div><span class="lbl">UF</span><div class="inp">SP ▾</div></div><div class="mf"><span class="btn block">Criar caravana</span><span class="btn block ghost">Cancelar</span></div></div></div></div>
+</div></section>
+
+<section><h2>Estados</h2><div class="states">
+<div class="state"><h4>Carregando</h4><div class="skel" style="height:120px"></div><div class="skel" style="height:60px;width:60%"></div><p class="muted">Skeleton do destaque + 3 cards.</p></div>
+<div class="state"><h4>Sem caravana aberta</h4><p><b>Sem destaque.</b> Mostra só a grade (ou o vazio); o botão flutuante continua para quem pode criar.</p></div>
+<div class="state"><h4>Próxima já esgotada</h4><p class="muted">O destaque é sempre a próxima caravana ABERTA com vaga; esgotadas vão para a grade com o selo ESGOTADA.</p></div>
+<div class="state"><h4>Erro no modal</h4><div class="alert">A data limite de vendas deve ser até a partida.</div></div>
+<div class="state"><h4>Enviando</h4><p>“Criando…” desabilitado; aba e campos travados.</p></div>
+<div class="state"><h4>Sem permissão</h4><p class="muted">Sem <code>PERM_CARAVAN_CREATE</code> não há botão flutuante.</p></div>
+</div></section>
+</div></div></body></html>

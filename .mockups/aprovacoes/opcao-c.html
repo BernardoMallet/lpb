@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Aprovações · Opção C — Fila + detalhe com contexto da caravana</title>
+<link rel="stylesheet" href="../_base.css">
+<style>
+.md{display:grid;grid-template-columns:340px 1fr;gap:16px;align-items:start}.f-t .md{grid-template-columns:260px 1fr}.f-m .md{grid-template-columns:1fr}
+.qi{display:grid;gap:2px;padding:12px;border:2px solid var(--ink);border-radius:var(--r-sm);background:#fff;margin-bottom:8px}.qi.on{background:var(--ink);color:#fff}.qi.on .muted{color:#b8b8b8}
+.det{background:#fff;border:2px solid var(--ink);border-radius:var(--r-md);padding:18px;display:grid;gap:12px}.kv{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-size:.9rem}.kv dt{color:var(--mute)}.kv dd{margin:0;font-weight:700}
+.acts{display:flex;gap:10px;flex-wrap:wrap}.f-m .acts .btn{flex:1}.back{font-weight:800;min-height:44px;display:inline-flex;align-items:center}
+.q{font-size:1.1rem}
+</style>
+</head>
+<body><div class="stripes"></div>
+<div class="page">
+<div class="intro"><p class="eyebrow">Rascunho descartável · Aprovações · opção C</p><h1>C: Fila + detalhe com contexto da caravana</h1>
+<p>À esquerda, a fila de pedidos; à direita, o detalhe do selecionado com a frase “Diretor {nome} pede vaga na caravana X. Conceder?”, os dados da caravana (vagas livres, data, preço) e Sim/Não. No celular: lista, depois tela de detalhe.</p>
+<div class="pros">
+<div class="note"><b>Quando escolher</b>Quando quem decide precisa de contexto (quantas vagas restam) antes de gastar uma vaga.</div>
+<div class="note"><b>Trade-offs</b>+ Decisão informada; antecipa o erro de “esgotada”. + Bom em desktop. − Mais esforço: precisa buscar <code>GET /caravans/{id}</code> ao selecionar (ou o back incluir <code>availableSeats</code> em <code>SeatRequestView</code>). − Mais navegação no celular.</div>
+<div class="note"><b>Componentes do design system</b>Card, Button, Alert, Toast, EmptyState, Skeleton, Avatar. Novo: padrão de lista + detalhe (layout, não componente).</div>
+<div class="note"><b>Acessibilidade</b>Fila é uma lista com <code>aria-current</code> no item aberto; mudar a seleção move o foco ao título do detalhe e anuncia “Pedido 2 de 3”. No celular, o botão Voltar devolve o foco ao item de origem. Setas navegam a fila; Tab pula para o detalhe.</div>
+</div></div>
+
+<div class="stack">
+<section><h2>Desktop</h2><div class="frame f-d"><div class="hdr"><div class="logo">★</div><b>LOUCOS PELO BOTAFOGO</b><nav><a>Notícias</a><a>Caravanas</a><a class="on">Aprovações</a><a>Permissões</a><a>CPFs bloqueados</a></nav><div class="av">BM</div></div>
+<div class="body" style="min-height:420px"><div class="top"><div><p class="eyebrow">Presidente e Adm Geral</p><h2>Aprovações</h2></div><span class="badge dark">3 pendentes</span></div>
+<div class="md"><div role="list"><div class="qi on" role="listitem" aria-current="true"><b>João Carlos Pereira</b><span class="muted">Botafogo x Palmeiras · 14/11 18:20</span></div><div class="qi" role="listitem"><b>Alexandre Moura</b><span class="muted">Botafogo x Corinthians · 14/11 17:02</span></div><div class="qi" role="listitem"><b>Rafael Barros</b><span class="muted">Botafogo x Cruzeiro · 13/11 21:45</span></div></div>
+<article class="det"><h3 tabindex="-1" class="q" style="font-family:var(--font);text-transform:none;line-height:1.3"><b>Diretor João Carlos Pereira</b> pede vaga na caravana <b>Botafogo x Palmeiras</b>. Conceder?</h3><dl class="kv"><dt>Saída</dt><dd>sáb, 06/12/2026 · 05:30 · São Paulo/SP</dd><dt>Vagas livres</dt><dd>15 de 46</dd><dt>Preço normal</dt><dd>R$ 85,00 (esta vaga: grátis)</dd><dt>Pedido em</dt><dd>14/11/2026 às 18:20</dd></dl><div class="acts"><span class="btn">Sim, conceder</span><span class="btn ghost">Não</span></div></article></div></div></div></section>
+
+<section><h2>Desktop · detalhe com caravana esgotada</h2><div class="frame f-d"><div class="body"><div class="md"><div role="list"><div class="qi" role="listitem"><b>João Carlos Pereira</b><span class="muted">Botafogo x Palmeiras</span></div><div class="qi on" role="listitem" aria-current="true"><b>Alexandre Moura</b><span class="muted">Botafogo x Corinthians</span></div></div>
+<article class="det"><h3 class="q" style="font-family:var(--font);text-transform:none;line-height:1.3"><b>Diretor Alexandre Moura</b> pede vaga na caravana <b>Botafogo x Corinthians</b>. Conceder?</h3><div class="alert" role="alert">Caravana esgotada. Não é possível conceder a vaga.</div><dl class="kv"><dt>Vagas livres</dt><dd>0 de 46 <span class="badge star">ESGOTADA</span></dd></dl><div class="acts"><span class="btn" style="opacity:.5" aria-disabled="true">Sim, conceder</span><span class="btn danger">Negar o pedido</span></div></article></div></div></div></section>
+
+<section><h2>Tablet</h2><div class="frame f-t"><div class="hdr"><div class="burger">≡</div><b>LOUCOS PELO BOTAFOGO</b><div class="av">BM</div></div><div class="body"><h2 style="font-size:1.3rem;margin-bottom:12px">Aprovações <span class="badge dark">3</span></h2><div class="md"><div role="list"><div class="qi on" role="listitem"><b>João C. Pereira</b><span class="muted">Botafogo x Palmeiras</span></div><div class="qi" role="listitem"><b>Alexandre Moura</b><span class="muted">Botafogo x Corinthians</span></div></div><article class="det"><p class="q"><b>Diretor João Carlos Pereira</b> pede vaga na caravana <b>Botafogo x Palmeiras</b>. Conceder?</p><dl class="kv"><dt>Vagas livres</dt><dd>15 de 46</dd><dt>Saída</dt><dd>sáb, 06/12 · 05:30</dd></dl><div class="acts"><span class="btn">Sim, conceder</span><span class="btn ghost">Não</span></div></article></div></div></div></section>
+
+<section><h2>Celular · lista e detalhe (duas telas)</h2><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;align-items:start">
+<div class="frame f-m"><div class="hdr"><div class="burger">≡</div><div class="av">BM</div></div><div class="body"><h2 style="font-size:1.2rem;margin-bottom:12px">Aprovações <span class="badge dark">3</span></h2><div class="qi"><b>João Carlos Pereira</b><span class="muted">Botafogo x Palmeiras · 14/11</span></div><div class="qi"><b>Alexandre Moura</b><span class="muted">Botafogo x Corinthians · 14/11</span></div><div class="qi"><b>Rafael Barros</b><span class="muted">Botafogo x Cruzeiro · 13/11</span></div></div></div>
+<div class="frame f-m"><div class="hdr"><div class="burger">≡</div><div class="av">BM</div></div><div class="body"><span class="back">← Voltar para a fila</span><article class="det"><p class="q"><b>Diretor João Carlos Pereira</b> pede vaga na caravana <b>Botafogo x Palmeiras</b>. Conceder?</p><dl class="kv"><dt>Vagas livres</dt><dd>15 de 46</dd><dt>Saída</dt><dd>06/12 · 05:30</dd></dl><div class="acts"><span class="btn">Sim, conceder</span><span class="btn ghost">Não</span></div></article></div></div></div></section>
+
+<section><h2>Estados</h2><div class="states">
+<div class="state"><h4>Carregando</h4><div class="skel" style="height:56px"></div><div class="skel" style="height:56px"></div><p class="muted">Detalhe: skeleton enquanto busca a caravana.</p></div>
+<div class="state"><h4>Vazio</h4><p><b>Nenhum pedido pendente.</b></p></div>
+<div class="state"><h4>Erro ao buscar a caravana</h4><div class="alert">Não foi possível ver as vagas. Você ainda pode decidir; o servidor confere ao conceder.</div></div>
+<div class="state"><h4>Após decidir</h4><div class="alert ok" role="status">Vaga concedida a João Carlos Pereira.</div><p class="muted" style="margin-top:6px">A fila avança para o próximo pedido.</p></div>
+<div class="state"><h4>Já decidido (409)</h4><div class="alert">Este pedido já foi decidido por outra pessoa.</div></div>
+<div class="state"><h4>Enviando</h4><p>Botões travados com “Concedendo…”.</p></div>
+</div></section>
+
+<section><h2>Minhas Compras seguindo o padrão desta opção (lista + comprovante)</h2><div class="frame f-d"><div class="body"><h2 style="font-size:1.4rem;margin-bottom:12px">Minhas Compras</h2><div class="md" style="grid-template-columns:340px 1fr"><div><div class="qi on"><b>Vaga na caravana Botafogo x Palmeiras</b><span class="muted">14/11/2026 · R$ 85,00 · Paga</span></div><div class="qi"><b>Vaga na caravana Botafogo x Cruzeiro</b><span class="muted">10/11/2026 · R$ 85,00 · Estornada</span></div><div class="qi"><b>Vaga na caravana Botafogo x Grêmio</b><span class="muted">Pendente · expira em 06:10</span></div></div>
+<article class="det"><h3>Comprovante</h3><dl class="kv"><dt>Compra</dt><dd>a1b2c3d4-…-9f</dd><dt>Descrição</dt><dd>Vaga na caravana Botafogo x Palmeiras</dd><dt>Valor</dt><dd>R$ 85,00</dd><dt>Data</dt><dd>14/11/2026</dd></dl><div class="acts"><span class="btn">Baixar comprovante (PDF)</span></div></article></div></div></div><p class="muted" style="margin-top:6px">Estornada: o detalhe mostra o selo “Estornada” e o PDF sai marcado “COMPROVANTE CANCELADO”. Celular: lista e detalhe em duas telas.</p></section>
+</div></div></body></html>

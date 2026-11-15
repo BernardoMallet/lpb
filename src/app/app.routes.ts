@@ -51,8 +51,23 @@ export const routes: Routes = [
       {
         path: rota(ROTAS.caravanas),
         title: titulo('Caravanas'),
-        data: { titulo: 'Caravanas' },
-        loadComponent: () => import('./area/em-breve').then((m) => m.EmBreve),
+        loadComponent: () => import('./area/caravanas/caravanas').then((m) => m.Caravanas),
+      },
+      {
+        path: `${rota(ROTAS.caravanas)}/:id`,
+        title: titulo('Caravana'),
+        loadComponent: () => import('./area/caravanas/caravana').then((m) => m.CaravanaDetalhe),
+      },
+      {
+        path: rota(ROTAS.minhasCompras),
+        title: titulo('Minhas compras'),
+        loadComponent: () => import('./area/compras/minhas-compras').then((m) => m.MinhasCompras),
+      },
+      {
+        path: rota(ROTAS.aprovacoes),
+        title: titulo('Aprovações'),
+        canActivate: [papelGuard(...PAPEIS_GESTAO)],
+        loadComponent: () => import('./area/aprovacoes/aprovacoes').then((m) => m.Aprovacoes),
       },
       {
         path: rota(ROTAS.minhaConta),

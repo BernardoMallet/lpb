@@ -48,6 +48,10 @@
           <app-icon name="user" />
           Minha conta
         </a>
+        <a app-menu-item [routerLink]="rotas.minhasCompras">
+          <app-icon name="receipt" />
+          Minhas compras
+        </a>
         <button app-menu-item type="button" (click)="sair()">
           <app-icon name="logout" />
           Sair

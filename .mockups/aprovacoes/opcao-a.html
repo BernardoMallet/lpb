@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Aprovações · Opção A — Cartões com a pergunta em frase</title>
+<link rel="stylesheet" href="../_base.css">
+<style>
+.q{background:#fff;border:2px solid var(--ink);border-radius:var(--r-md);padding:16px;display:grid;gap:12px;box-shadow:var(--shadow)}.q p.s{font-size:1.05rem}.q .acts{display:flex;gap:10px;flex-wrap:wrap}.f-m .q .acts .btn{flex:1}
+.qs{display:grid;gap:18px;max-width:760px}.f-m .qs{gap:14px}
+.who{display:flex;gap:12px;align-items:center}.who .av{margin:0}
+.toast{position:absolute;right:16px;bottom:16px;background:var(--ink);color:#fff;padding:12px 14px;border-radius:var(--r-sm);font-weight:700;max-width:320px;border-left:6px solid var(--star)}
+.rel{position:relative}
+.pur{display:grid;gap:10px}.pcard{background:#fff;border:2px solid var(--ink);border-radius:var(--r-md);padding:14px;display:grid;grid-template-columns:1fr auto;gap:8px 12px;align-items:center}.f-m .pcard{grid-template-columns:1fr}
+</style>
+</head>
+<body><div class="stripes"></div>
+<div class="page">
+<div class="intro"><p class="eyebrow">Rascunho descartável · Aprovações · opção A</p><h1>A: Cartões com a pergunta em frase</h1>
+<p>Cada pedido é um cartão com a frase pedida: “Diretor {nome} pede vaga na caravana X. Conceder?” e dois botões grandes, Sim e Não. O erro de caravana esgotada aparece dentro do próprio cartão.</p>
+<div class="pros">
+<div class="note"><b>Quando escolher</b>Fila curta (poucos pedidos por dia) e decisões rápidas, inclusive no celular.</div>
+<div class="note"><b>Trade-offs</b>+ Leitura imediata e idêntica nos três tamanhos. + Mais simples. − Com muitos pedidos vira uma lista longa. − Não mostra vagas livres (o DTO atual de <code>GET /admin/seat-requests</code> não traz isso).</div>
+<div class="note"><b>Componentes do design system</b>Card, Button, Toast, Alert, EmptyState, Skeleton, Avatar. Nada novo.</div>
+<div class="note"><b>Acessibilidade</b>Cada cartão é um grupo rotulado com a própria frase (<code>aria-labelledby</code>); botões se chamam “Sim, conceder vaga a {nome}” / “Não conceder”. Resultado em região <code>role="status"</code>. Depois de decidir, o foco vai para o próximo cartão (ou para o título se a fila acabar). Alvos ≥ 44 px, não depende de cor.</div>
+</div></div>
+
+<div class="stack">
+<section><h2>Desktop</h2><div class="frame f-d rel">
+<div class="hdr"><div class="logo">★</div><b>LOUCOS PELO BOTAFOGO</b><nav><a>Notícias</a><a>Caravanas</a><a class="on">Aprovações</a><a>Permissões</a><a>CPFs bloqueados</a></nav><div class="av">BM</div></div>
+<div class="body" style="min-height:420px"><div class="top"><div><p class="eyebrow">Presidente e Adm Geral</p><h2>Aprovações</h2></div><span class="badge dark">3 pendentes</span></div>
+<div class="qs">
+<article class="q" aria-labelledby="q1"><div class="who"><span class="av">JC</span><p class="s" id="q1"><b>Diretor João Carlos Pereira</b> pede vaga na caravana <b>Botafogo x Palmeiras</b>. Conceder?</p></div><p class="muted">Pedido em 14/11/2026 às 18:20 · sáb, 06/12 · São Paulo/SP</p><div class="acts"><span class="btn">Sim, conceder</span><span class="btn ghost">Não</span></div></article>
+<article class="q" aria-labelledby="q2"><div class="who"><span class="av">AM</span><p class="s" id="q2"><b>Diretor Alexandre Moura</b> pede vaga na caravana <b>Botafogo x Corinthians</b>. Conceder?</p></div><div class="alert" role="alert">Caravana esgotada. Não é possível conceder a vaga.</div><div class="acts"><span class="btn" aria-disabled="true" style="opacity:.5">Sim, conceder</span><span class="btn ghost">Não (negar o pedido)</span></div></article>
+<article class="q"><div class="who"><span class="av">RB</span><p class="s"><b>Diretor Rafael Barros</b> pede vaga na caravana <b>Botafogo x Cruzeiro</b>. Conceder?</p></div><div class="acts"><span class="btn">Sim, conceder</span><span class="btn ghost">Não</span></div></article></div></div>
+<div class="toast" role="status">Vaga concedida a Diretor João Carlos Pereira.</div></div></section>
+
+<section><h2>Tablet</h2><div class="frame f-t"><div class="hdr"><div class="burger">≡</div><b>LOUCOS PELO BOTAFOGO</b><div class="av">BM</div></div><div class="body"><h2 style="font-size:1.3rem;margin-bottom:14px">Aprovações <span class="badge dark">3</span></h2><div class="qs"><article class="q"><div class="who"><span class="av">JC</span><p class="s"><b>Diretor João Carlos Pereira</b> pede vaga na caravana <b>Botafogo x Palmeiras</b>. Conceder?</p></div><p class="muted">Pedido em 14/11 às 18:20</p><div class="acts"><span class="btn">Sim, conceder</span><span class="btn ghost">Não</span></div></article><article class="q"><div class="who"><span class="av">RB</span><p class="s"><b>Diretor Rafael Barros</b> pede vaga na caravana <b>Botafogo x Cruzeiro</b>. Conceder?</p></div><div class="acts"><span class="btn">Sim, conceder</span><span class="btn ghost">Não</span></div></article></div></div></div></section>
+
+<section><h2>Celular</h2><div class="frame f-m"><div class="hdr"><div class="burger">≡</div><div class="av">BM</div></div><div class="body"><h2 style="font-size:1.2rem;margin-bottom:12px">Aprovações <span class="badge dark">3</span></h2><div class="qs"><article class="q"><p class="s"><b>Diretor João Carlos Pereira</b> pede vaga na caravana <b>Botafogo x Palmeiras</b>. Conceder?</p><p class="muted">14/11 · 18:20</p><div class="acts"><span class="btn">Sim</span><span class="btn ghost">Não</span></div></article><article class="q"><p class="s"><b>Diretor Alexandre Moura</b> pede vaga na caravana <b>Botafogo x Corinthians</b>. Conceder?</p><div class="alert" role="alert">Caravana esgotada. Não é possível conceder a vaga.</div><div class="acts"><span class="btn ghost">Negar pedido</span></div></article></div></div></div></section>
+
+<section><h2>Estados</h2><div class="states">
+<div class="state"><h4>Carregando</h4><div class="skel" style="height:80px"></div><div class="skel" style="height:80px"></div></div>
+<div class="state"><h4>Vazio</h4><p><b>Nenhum pedido pendente.</b></p><p class="muted">Sem notificação: a lista é conferida ao abrir a página.</p></div>
+<div class="state"><h4>Erro de carga</h4><div class="alert" role="alert">Não foi possível carregar os pedidos.</div></div>
+<div class="state"><h4>Caravana esgotada (409 SOLD_OUT)</h4><div class="alert">Caravana esgotada. Não é possível conceder a vaga.</div><p class="muted" style="margin-top:6px">O pedido continua pendente; “Sim” fica desabilitado e “Não” negar o pedido.</p></div>
+<div class="state"><h4>Já decidido (409)</h4><div class="alert">Este pedido já foi decidido por outra pessoa.</div><p class="muted" style="margin-top:6px">O cartão sai da fila ao atualizar.</p></div>
+<div class="state"><h4>Enviando</h4><p>“Sim” mostra “Concedendo…” e os dois botões travam (anti duplo clique).</p></div>
+<div class="state"><h4>Confirmação do “Não”</h4><p class="muted">Sem modal extra: o pedido é negado na hora e o toast oferece “Desfazer” apenas se o back permitir (não há endpoint hoje; sem desfazer).</p></div>
+<div class="state"><h4>Sem permissão (403)</h4><p class="muted">Item “Aprovações” nem aparece para Diretor/Sócio; se abrir a URL, vai para “Sem acesso”.</p></div>
+</div></section>
+
+<section><h2>Minhas Compras seguindo o padrão desta opção (cartões)</h2><div class="frame f-d"><div class="body"><h2 style="font-size:1.4rem;margin-bottom:12px">Minhas Compras</h2><div class="pur">
+<article class="pcard"><div><b>Vaga na caravana Botafogo x Palmeiras</b><p class="muted">Compra a1b2…9f · 14/11/2026 · R$ 85,00</p></div><div class="row"><span class="badge ok">Paga</span><span class="btn sm">Baixar comprovante (PDF)</span></div></article>
+<article class="pcard"><div><b>Vaga na caravana Botafogo x Cruzeiro</b><p class="muted">Compra c3d4…2e · 10/11/2026 · R$ 85,00</p></div><div class="row"><span class="badge bad">Estornada</span><span class="btn sm ghost">Comprovante cancelado (PDF)</span></div></article>
+<article class="pcard"><div><b>Vaga na caravana Botafogo x Grêmio</b><p class="muted">Aguardando pagamento · expira em 06:10</p></div><div class="row"><span class="badge">Pendente</span><span class="btn sm star">Continuar pagamento</span></div></article>
+</div></div></div><p class="muted" style="margin-top:6px">Vazio: “Você ainda não tem compras.” com link para Caravanas. Erro do PDF: “Não foi possível baixar o comprovante.” Estorno em andamento: selo “Estorno em andamento”. Celular: mesmo cartão em 1 coluna.</p></section>
+</div></div></body></html>

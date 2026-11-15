@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mapa do ônibus · Opção A — Planta vertical + painel lateral</title>
+<link rel="stylesheet" href="../_base.css">
+<style>
+.two{display:grid;grid-template-columns:300px 1fr;gap:20px;align-items:start}.f-t .two{grid-template-columns:260px 1fr;gap:14px}.f-m .two{grid-template-columns:1fr}
+.bus{background:#fff;border:2px solid var(--ink);border-radius:36px 36px 14px 14px;padding:14px 14px 16px;max-width:300px;margin:auto}.f-m .bus{max-width:100%}
+.front{display:flex;justify-content:space-between;align-items:center;border-bottom:2px dashed var(--ink);padding-bottom:10px;margin-bottom:12px;font-size:.75rem;font-weight:800;text-transform:uppercase}.front .wheel{width:34px;height:34px;border:2px solid var(--ink);border-radius:50%;display:grid;place-items:center}
+.seats{display:grid;grid-template-columns:44px 44px 28px 44px 44px;gap:8px;justify-content:center}
+.seat{width:44px;height:44px;border:2px solid var(--ink);border-radius:8px 8px 12px 12px;background:#fff;color:var(--ink);font:800 .78rem var(--font);padding:0}.seat.occ{background:var(--ink);color:#fff}.seat.mine{background:var(--star)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:.8rem;margin-top:12px}.legend i{display:inline-block;width:16px;height:16px;border:2px solid var(--ink);border-radius:4px;vertical-align:-3px;margin-right:4px;background:#fff}.legend i.o{background:var(--ink)}.legend i.m{background:var(--star)}
+.aviso{border-left:4px solid var(--ink);background:#fff;padding:8px 10px;font-size:.85rem;margin-top:10px}
+.panel{background:#fff;border:2px solid var(--ink);border-radius:var(--r-md);padding:16px;display:grid;gap:10px}.panel h2{font-size:1.3rem}
+.tabs{display:flex;gap:0;margin-bottom:14px}.tabs span{flex:1;text-align:center;border:2px solid var(--ink);padding:10px;font-weight:800;text-transform:uppercase;font-size:.8rem;background:#fff}.tabs .on{background:var(--ink);color:#fff}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-size:.9rem}.kv dt{color:var(--mute)}.kv dd{margin:0;font-weight:700}
+.stk{position:sticky;bottom:0;background:#fff;border-top:2px solid var(--ink);padding:12px 16px;margin:0 -16px -16px;display:flex;gap:12px;align-items:center;justify-content:space-between}
+.qr{width:140px;height:140px;border:2px solid var(--ink);background:repeating-conic-gradient(var(--ink) 0 25%,#fff 0 50%) 0 0/20px 20px}
+</style>
+</head>
+<body><div class="stripes"></div>
+<div class="page">
+<div class="intro"><p class="eyebrow">Rascunho descartável · Interior da caravana · opção A</p><h1>A: Planta vertical + painel lateral</h1>
+<p>Vista de cima do ônibus (motorista na frente, bancos 2+2 e corredor). Bancos ocupados em preto, livres em branco. À direita, painel com dados, preço do perfil, tempo da reserva e o checkout <b>no próprio painel</b>. Gestão numa aba da mesma página.</p>
+<div class="pros">
+<div class="note"><b>Quando escolher</b>Quando a imagem do ônibus é parte da experiência e a pessoa quer “ver” a lotação sem sair da página.</div>
+<div class="note"><b>Trade-offs</b>+ Metáfora direta (planta real). + Checkout sem trocar de página. − O painel e o mapa disputam espaço no tablet. − 46 bancos clicáveis para dar a mesma ação: risco de a pessoa achar que escolhe lugar (mitigado pelo aviso fixo e pelo texto do botão).</div>
+<div class="note"><b>Componentes do design system</b>Button, Card, Modal (só para confirmar estorno), Table, Select, Alert, Skeleton, Toast. Novo: <b style="display:inline">BusMap</b> (um componente, uma implementação) e abas simples.</div>
+<div class="note"><b>Acessibilidade</b>Mapa é um grupo com resumo falado: “46 bancos, 31 ocupados, 15 livres”. Cada banco é um &lt;button&gt; (rótulo “Banco 32, livre. Pegar vaga”), mas a <b>alternativa principal</b> é o botão “Pegar vaga” do painel, que faz a mesma coisa. Bancos ocupados ficam <code>aria-disabled</code>. Ocupado/livre/seu têm texto e forma, não só cor. Alvos de 44 px. Aviso de posições ilustrativas lido antes do mapa.</div>
+</div></div>
+
+<div class="stack">
+<section><h2>Desktop · interior da caravana</h2><div class="frame f-d">
+<div class="hdr"><div class="logo">★</div><b>LOUCOS PELO BOTAFOGO</b><nav><a>Notícias</a><a class="on">Caravanas</a><a>Permissões</a><a>CPFs bloqueados</a></nav><div class="av">BM</div></div>
+<div class="body"><p class="muted">Caravanas › Botafogo x Palmeiras</p>
+<div class="tabs" style="max-width:360px;margin-top:8px"><span class="on">Vaga</span><span>Gestão</span></div>
+<div class="two"><div><div class="bus"><div class="front"><span>Frente</span><span class="wheel">◎</span><span>Motorista</span></div><div class="seats" data-bus data-total="46" data-occ="31" data-mode="v" role="group" aria-label="Mapa do ônibus: 46 bancos, 31 ocupados, 15 livres"></div></div>
+<div class="legend"><span><i class="o"></i>Ocupado</span><span><i></i>Livre</span><span><i class="m"></i>Sua vaga</span></div><p class="aviso">Posições ilustrativas: a ordem é a de entrada no ônibus.</p></div>
+<div class="panel"><span class="badge dark" style="justify-self:start">Aberta</span><h2>Botafogo x Palmeiras</h2><dl class="kv"><dt>Local</dt><dd>São Paulo/SP</dd><dt>Saída</dt><dd>sáb, 06/12/2026 · 05:30</dd><dt>Vendas até</dt><dd>05/12/2026 23:59</dd><dt>Vagas</dt><dd>15 livres de 46</dd></dl><p class="muted">Saída da sede às 05:30, retorno após o jogo. (texto puro da descrição)</p>
+<div class="stk" style="position:static;margin:0;border:2px solid var(--ink);border-radius:var(--r-sm)"><div><p class="price">R$ 85,00 <small>seu preço</small></p><p class="muted">Cartão em até 1x</p></div><span class="btn star">Pegar vaga</span></div></div></div></div></div></section>
+
+<section><h2>Desktop · checkout no painel (reserva criada)</h2><div class="frame f-d"><div class="body"><div class="two"><div><div class="bus"><div class="front"><span>Frente</span><span class="wheel">◎</span><span>Motorista</span></div><div class="seats" data-bus data-total="46" data-occ="31" data-mine="32" data-mode="v" role="group" aria-label="Mapa do ônibus: 46 bancos, 32 ocupados, 14 livres"></div></div><div class="legend"><span><i class="o"></i>Ocupado</span><span><i></i>Livre</span><span><i class="m"></i>Sua vaga</span></div><p class="aviso">Posições ilustrativas: a ordem é a de entrada no ônibus.</p></div>
+<div class="panel"><h2>Pagamento da vaga</h2><div class="alert ok" role="status" style="border-color:var(--ink);color:var(--ink)">Reserva expira em <span class="timer">09:42</span></div><p>Vaga na caravana Botafogo x Palmeiras · <b>R$ 85,00</b></p>
+<fieldset style="border:0;padding:0;margin:0;display:grid;gap:8px"><legend class="lbl">Forma de pagamento</legend><span class="radio on">◉ PIX (QR Code e copia e cola)</span><span class="radio">○ Cartão de crédito (pagamento no PagBank)</span></fieldset>
+<span class="lbl" style="margin:0">Parcelas <small class="muted">(só aparece se a caravana permitir)</small></span><div class="inp">1x de R$ 85,00 ▾</div><span class="btn block">Pagar R$ 85,00</span><p class="muted">Seus dados de cartão nunca passam por este site.</p></div></div></div></div></section>
+
+<section><h2>Tablet · interior</h2><div class="frame f-t"><div class="hdr"><div class="burger">≡</div><b>LOUCOS PELO BOTAFOGO</b><div class="av">BM</div></div><div class="body"><h2 style="font-size:1.3rem;margin-bottom:10px">Botafogo x Palmeiras</h2><div class="two"><div><div class="bus" style="max-width:260px"><div class="front"><span>Frente</span><span>Motorista</span></div><div class="seats" data-bus data-total="46" data-occ="31" data-mode="v" role="group" aria-label="Mapa do ônibus: 46 bancos, 31 ocupados, 15 livres"></div></div><p class="aviso">Posições ilustrativas: a ordem é a de entrada no ônibus.</p></div><div class="panel"><dl class="kv"><dt>Local</dt><dd>São Paulo/SP</dd><dt>Saída</dt><dd>sáb, 06/12 · 05:30</dd><dt>Vagas</dt><dd>15 livres de 46</dd></dl><p class="price">R$ 85,00 <small>seu preço</small></p><span class="btn star block">Pegar vaga</span></div></div></div></div></section>
+
+<section><h2>Celular · interior (ação primeiro, mapa depois; barra fixa embaixo)</h2><div class="frame f-m"><div class="hdr"><div class="burger">≡</div><div class="av">BM</div></div><div class="body" style="padding-bottom:0"><h2 style="font-size:1.2rem">Botafogo x Palmeiras</h2><p class="muted">São Paulo/SP · sáb, 06/12 · 05:30</p><p class="muted" style="margin:6px 0 12px">15 vagas livres de 46</p><p class="aviso" style="margin:0 0 10px">Posições ilustrativas: a ordem é a de entrada no ônibus.</p><div class="bus"><div class="front"><span>Frente</span><span>Motorista</span></div><div class="seats" data-bus data-total="46" data-occ="31" data-mode="v" role="group" aria-label="Mapa do ônibus: 46 bancos, 31 ocupados, 15 livres"></div></div><div class="legend"><span><i class="o"></i>Ocupado</span><span><i></i>Livre</span><span><i class="m"></i>Sua</span></div><div class="stk"><div><p class="price">R$ 85,00</p></div><span class="btn star">Pegar vaga</span></div></div></div></section>
+
+<section><h2>Papéis: botão principal por perfil</h2><div class="states">
+<div class="state"><h4>Sócio / Não-sócio</h4><span class="btn star">Pegar vaga · R$ 85,00</span><p class="muted" style="margin-top:6px">Abre o pagamento. Não-sócio e sócio ATRASADO/INATIVO vêem o preço com acréscimo.</p></div>
+<div class="state"><h4>Diretor</h4><span class="btn star">Pedir vaga grátis</span><p class="muted" style="margin-top:6px">Cria o pedido de aprovação. Depois: “Pedido enviado. Aguarde a decisão do Presidente ou Adm Geral.” (sem notificação: aparece ao reabrir a caravana).</p></div>
+<div class="state"><h4>Presidente</h4><span class="btn star">Pegar vaga</span><p class="muted" style="margin-top:6px">Vaga grátis sem aprovação; confirma e vai para Minhas Compras.</p></div>
+<div class="state"><h4>Já tem vaga</h4><span class="btn ghost">Ver comprovante</span><p class="muted" style="margin-top:6px">“Sua vaga está garantida.” Bancos mostram “Sua vaga” em amarelo.</p></div>
+</div></section>
+
+<section><h2>Pós-compra e pagamento (painel, desktop)</h2><div class="states">
+<div class="state"><h4>PIX gerado</h4><div class="row"><div class="qr" role="img" aria-label="QR Code do PIX"></div><div><p>PIX copia e cola</p><div class="inp" style="margin:6px 0">00020126…6304ABCD</div><span class="btn ghost sm">Copiar código</span></div></div><p class="muted" style="margin-top:8px">Aguardando confirmação… (atualiza sozinho)</p></div>
+<div class="state"><h4>Cartão</h4><p>“Você será levado ao PagBank para pagar. Volte aqui depois.”</p><p class="muted">Ao voltar, a tela confere o status com o servidor; nunca confia só no redirecionamento.</p></div>
+<div class="state"><h4>Pago</h4><div class="alert ok">Vaga confirmada!</div><p style="margin-top:8px">Salve seu comprovante em Minhas Compras.</p><span class="btn sm" style="margin-top:8px">Ir para Minhas Compras</span></div>
+<div class="state"><h4>Reserva expirou</h4><div class="alert">O tempo da reserva acabou e a vaga foi liberada.</div><span class="btn ghost sm" style="margin-top:8px">Tentar de novo</span></div>
+<div class="state"><h4>Esgotada (409 SOLD_OUT)</h4><div class="alert">As vagas acabaram. Escolha outra caravana.</div></div>
+<div class="state"><h4>Já tem vaga (409 ALREADY_BOOKED)</h4><div class="alert">Você já tem vaga nesta caravana.</div></div>
+<div class="state"><h4>Vendas encerradas</h4><div class="alert">As vendas desta caravana foram encerradas.</div></div>
+<div class="state"><h4>Pagamento recusado</h4><div class="alert">Pagamento não aprovado. Tente outra forma de pagamento.</div></div>
+</div></section>
+
+<section><h2>Aba Gestão · desktop (Presidente / Diretor com permissão)</h2><div class="frame f-d"><div class="body"><div class="tabs" style="max-width:360px"><span>Vaga</span><span class="on">Gestão</span></div>
+<div class="row spread" style="margin-bottom:12px"><div><span class="badge dark">Aberta</span><h2 style="font-size:1.3rem;margin-top:6px">Compradores · 31 vagas pagas</h2></div><div class="row"><span class="btn ghost">Cancelar caravana</span><span class="btn star">Confirmar caravana</span></div></div>
+<p class="muted" style="margin-bottom:10px">Confirmar fica disponível com as 46 vagas pagas ou depois de 05/12/2026 23:59. Depois de confirmar, as vendas são travadas.</p>
+<table class="t"><thead><tr><th>Nome</th><th>Status</th><th>Valor</th><th>Presença</th><th>Ações</th></tr></thead><tbody><tr><td>Marcos Vinícius Almeida</td><td><span class="badge ok">Pago</span></td><td>R$ 85,00</td><td>— (após confirmar)</td><td><span class="btn danger sm">Estornar</span></td></tr><tr><td>Fernanda Souza Lima</td><td><span class="badge ok">Pago</span></td><td>R$ 85,00</td><td>—</td><td><span class="btn danger sm">Estornar</span></td></tr><tr><td>Rogério Tavares</td><td><span class="badge bad">Estornado</span></td><td>R$ 110,00</td><td>—</td><td>—</td></tr></tbody></table>
+<p class="muted" style="margin-top:8px">Depois de confirmar: coluna Presença vira checkbox; botões “Baixar CSV” e “Baixar PDF” da lista de presença. Estorno após confirmar só aparece para Adm Geral.</p></div></div></section>
+
+<section><h2>Confirmar estorno (Modal único)</h2><div class="frame f-m" style="max-width:520px"><div class="scrim"><div class="modal"><div class="mh"><h3>Estornar compra?</h3><span class="x">×</span></div><div class="mb" style="padding-top:12px"><p>Compra de <b>Marcos Vinícius Almeida</b> · R$ 85,00</p><ul style="padding-left:18px;font-size:.9rem"><li>O valor volta integralmente pela mesma forma de pagamento.</li><li>A vaga é devolvida e pode ser vendida de novo.</li><li>O comprovante passa a constar como cancelado.</li><li>Não pode ser desfeito.</li></ul></div><div class="mf"><span class="btn ghost">Voltar</span><span class="btn danger">Estornar compra</span></div></div></div></div><p class="muted" style="margin-top:6px">Falha no estorno: “Não foi possível estornar agora. A compra fica como ‘Estorno falhou’ e pode ser tentada de novo.”</p></section>
+</div></div>
+<script>
+document.querySelectorAll('[data-bus]').forEach(el=>{const t=+el.dataset.total,o=+el.dataset.occ,m=+(el.dataset.mine||0);let h='';
+for(let i=1;i<=t;i++){const x=i-1,r=Math.floor(x/4)+1,c=x%4,col=c<2?c+1:c+2;const cls=i===m?'mine':(i<=o?'occ':'free');
+const lab=cls==='occ'?`Banco ${i}, ocupado`:cls==='mine'?`Banco ${i}, sua vaga`:`Banco ${i}, livre. Pegar vaga`;
+h+=`<button class="seat ${cls}" style="grid-column:${col};grid-row:${r}" aria-label="${lab}" ${cls==='occ'?'aria-disabled="true"':''}>${i}</button>`}
+el.innerHTML=h});
+</script>
+</body></html>

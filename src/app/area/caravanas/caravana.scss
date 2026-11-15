@@ -1,0 +1,92 @@
+.voltar {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  margin-bottom: 8px;
+  color: var(--c-black);
+  font-weight: 700;
+}
+
+.voltar app-icon {
+  width: 18px;
+  height: 18px;
+}
+
+.topo {
+  margin-bottom: 24px;
+}
+
+.topo h1 {
+  margin-bottom: 10px;
+}
+
+.topo h1:focus {
+  outline: none;
+}
+
+.esqueleto {
+  display: grid;
+  gap: 16px;
+}
+
+.palco {
+  display: grid;
+  gap: 24px;
+  margin-top: 24px;
+  align-items: start;
+}
+
+@media (min-width: 900px) {
+  .palco {
+    grid-template-columns: minmax(0, 1fr) minmax(320px, 400px);
+  }
+}
+
+.painel {
+  display: grid;
+  gap: 14px;
+  padding: 20px;
+  background: var(--c-white);
+  border: 2px solid var(--c-black);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-hard);
+}
+
+.painel h2 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.dados {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+}
+
+.dados div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 4px 12px;
+}
+
+.dados dt {
+  color: var(--c-mute);
+}
+
+.dados dd {
+  margin: 0;
+  font-weight: 800;
+}
+
+.descricao {
+  margin: 0;
+  white-space: pre-line;
+}
+
+.nota {
+  margin: 0;
+  color: var(--c-mute);
+  font-size: 0.875rem;
+}

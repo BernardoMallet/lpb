@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mapa do ônibus · Opção C — Grade compacta + barra de ação + checkout em modal</title>
+<link rel="stylesheet" href="../_base.css">
+<style>
+.cgrid{display:grid;grid-template-columns:repeat(10,1fr);gap:6px}.f-t .cgrid{grid-template-columns:repeat(8,1fr)}.f-m .cgrid{grid-template-columns:repeat(6,1fr)}
+.seat{min-height:44px;border:2px solid var(--ink);border-radius:var(--r-sm);background:#fff;color:var(--ink);font:800 .8rem var(--font);padding:0}.seat.occ{background:var(--ink);color:#fff}.seat.mine{background:var(--star)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:.8rem;margin-top:10px}.legend i{display:inline-block;width:16px;height:16px;border:2px solid var(--ink);border-radius:4px;vertical-align:-3px;margin-right:4px;background:#fff}.legend i.o{background:var(--ink)}.legend i.m{background:var(--star)}
+.aviso{border-left:4px solid var(--ink);background:#fff;padding:8px 10px;font-size:.85rem;margin-top:10px}
+.hero{display:grid;grid-template-columns:1fr 360px;gap:20px;align-items:start}.f-t .hero,.f-m .hero{grid-template-columns:1fr}
+.panel{background:#fff;border:2px solid var(--ink);border-radius:var(--r-md);padding:16px;display:grid;gap:10px}
+.cap{display:flex;justify-content:space-between;font-weight:800;font-size:.85rem;margin-bottom:6px}.cap span:first-child{text-transform:uppercase}
+.action{position:sticky;bottom:0;background:var(--ink);color:#fff;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 16px}.action .price{color:#fff}.action small{color:#b8b8b8}
+.qr{width:140px;height:140px;border:2px solid var(--ink);background:repeating-conic-gradient(var(--ink) 0 25%,#fff 0 50%) 0 0/20px 20px}.timer{font:900 1.2rem var(--display)}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-size:.9rem}.kv dt{color:var(--mute)}.kv dd{margin:0;font-weight:700}
+.cardrow{display:grid;grid-template-columns:auto 1fr auto auto;gap:12px;align-items:center;background:#fff;border:2px solid var(--ink);border-radius:var(--r-sm);padding:10px;margin-bottom:8px}.f-m .cardrow{grid-template-columns:1fr auto}
+</style>
+</head>
+<body><div class="stripes"></div>
+<div class="page">
+<div class="intro"><p class="eyebrow">Rascunho descartável · Interior da caravana · opção C</p><h1>C: Grade compacta + barra de ação + checkout em modal</h1>
+<p>Sem desenho de ônibus: uma grade de 46 quadrados numerados (preto = ocupado, branco = livre) em ordem de entrada, com barra de ocupação. Uma barra de ação fixa mostra preço e botão. O pagamento abre no <b>Modal único</b>. Gestão é uma seção na mesma página, com estorno em Modal.</p>
+<div class="pros">
+<div class="note"><b>Quando escolher</b>Quando você prefere leveza e acessibilidade máxima e o “ônibus” é só ilustração sem importância (as posições nem são reais).</div>
+<div class="note"><b>Trade-offs</b>+ Menor esforço e menor risco: grade simples, alvos grandes, funciona em qualquer largura. + Reduz a ilusão de escolher assento. − Menos “cara de ônibus”, menos emocional. − O pedido do escopo fala em “mapa do ônibus”: aqui seria uma versão abstrata (precisa da sua aprovação).</div>
+<div class="note"><b>Componentes do design system</b>Button, Modal, Table, Select, Alert, Skeleton, Toast. Novo: <b style="display:inline">SeatGrid</b> (única implementação) e barra de ação fixa.</div>
+<div class="note"><b>Acessibilidade</b>A grade é uma lista de botões em ordem numérica natural (Tab percorre só os livres; ocupados ficam fora da ordem de foco). Resumo falado no topo. Barra de ação no fim do DOM, com <code>env(safe-area-inset-bottom)</code>. Modal de pagamento: foco no título, Esc fecha (reserva continua até expirar), temporizador sem anúncio a cada segundo.</div>
+</div></div>
+
+<div class="stack">
+<section><h2>Desktop · interior</h2><div class="frame f-d">
+<div class="hdr"><div class="logo">★</div><b>LOUCOS PELO BOTAFOGO</b><nav><a>Notícias</a><a class="on">Caravanas</a><a>Permissões</a><a>CPFs bloqueados</a></nav><div class="av">BM</div></div>
+<div class="body"><p class="muted">Caravanas › Botafogo x Palmeiras</p><h2 style="margin:6px 0 14px">Botafogo x Palmeiras</h2>
+<div class="hero"><div><p class="aviso" style="margin:0 0 10px">Posições ilustrativas: a ordem é a de entrada no ônibus.</p><div class="cap"><span>46 bancos</span><span>31 ocupados · 15 livres</span></div><div class="bar" style="margin-bottom:12px"><i style="width:67%"></i></div><div class="cgrid" data-bus data-total="46" data-occ="31" role="group" aria-label="Bancos: 46 no total, 31 ocupados, 15 livres"></div><div class="legend"><span><i class="o"></i>Ocupado</span><span><i></i>Livre</span><span><i class="m"></i>Sua vaga</span></div></div>
+<aside class="panel"><span class="badge dark" style="justify-self:start">Aberta</span><dl class="kv"><dt>Local</dt><dd>São Paulo/SP</dd><dt>Saída</dt><dd>sáb, 06/12/2026 · 05:30</dd><dt>Vendas até</dt><dd>05/12/2026 23:59</dd></dl><p class="muted">Saída da sede às 05:30, retorno após o jogo.</p><p class="price">R$ 85,00 <small>seu preço</small></p><span class="btn star block">Pegar vaga</span></aside></div></div></div></section>
+
+<section><h2>Desktop · checkout em Modal</h2><div class="frame f-d"><div class="scrim"><div class="modal" style="max-width:480px"><div class="mh"><h3>Pagar vaga</h3><span class="x">×</span></div><div class="mb" style="padding-top:12px;display:grid;gap:10px"><div class="alert" style="border-color:var(--ink);color:var(--ink)" role="timer">Reserva expira em <span class="timer">09:42</span></div><p>Vaga na caravana Botafogo x Palmeiras · <b>R$ 85,00</b></p><span class="radio on">◉ PIX (QR Code e copia e cola)</span><span class="radio">○ Cartão de crédito (PagBank)</span><div class="inp">1x de R$ 85,00 ▾</div><p class="muted">Seus dados de cartão nunca passam por este site.</p></div><div class="mf"><span class="btn ghost">Depois</span><span class="btn">Pagar R$ 85,00</span></div></div></div></div>
+<p class="muted" style="margin-top:6px">“Depois” fecha o modal; a reserva continua até expirar e a caravana mostra “Continuar pagamento · 09:12”. Já com PIX gerado, o Modal troca para QR Code e copia e cola com “Aguardando confirmação…”.</p></section>
+
+<section><h2>Tablet · interior</h2><div class="frame f-t"><div class="hdr"><div class="burger">≡</div><b>LOUCOS PELO BOTAFOGO</b><div class="av">BM</div></div><div class="body"><h2 style="font-size:1.3rem;margin-bottom:10px">Botafogo x Palmeiras</h2><div class="hero"><div><p class="aviso" style="margin:0 0 10px">Posições ilustrativas: a ordem é a de entrada no ônibus.</p><div class="cap"><span>46 bancos</span><span>31 ocupados · 15 livres</span></div><div class="cgrid" data-bus data-total="46" data-occ="31" role="group" aria-label="Bancos: 46 no total, 31 ocupados, 15 livres"></div></div><aside class="panel"><dl class="kv"><dt>Local</dt><dd>São Paulo/SP</dd><dt>Saída</dt><dd>sáb, 06/12 · 05:30</dd></dl><p class="price">R$ 85,00</p><span class="btn star block">Pegar vaga</span></aside></div></div></div></section>
+
+<section><h2>Celular · interior com barra de ação fixa</h2><div class="frame f-m"><div class="hdr"><div class="burger">≡</div><div class="av">BM</div></div><div class="body" style="padding-bottom:8px"><h2 style="font-size:1.2rem">Botafogo x Palmeiras</h2><p class="muted">São Paulo/SP · sáb, 06/12 · 05:30</p><p class="aviso" style="margin:8px 0 10px">Posições ilustrativas: a ordem é a de entrada no ônibus.</p><div class="cap"><span>46 bancos</span><span>15 livres</span></div><div class="cgrid" data-bus data-total="46" data-occ="31" role="group" aria-label="Bancos: 46 no total, 31 ocupados, 15 livres"></div></div><div class="action"><div><p class="price">R$ 85,00</p><small>seu preço</small></div><span class="btn star">Pegar vaga</span></div></div></section>
+
+<section><h2>Papéis e estados</h2><div class="states">
+<div class="state"><h4>Diretor</h4><span class="btn star">Pedir vaga grátis</span><p class="muted" style="margin-top:6px">Barra mostra “Pedido enviado, aguardando decisão” depois.</p></div>
+<div class="state"><h4>Presidente</h4><span class="btn star">Pegar vaga</span></div>
+<div class="state"><h4>Pago</h4><div class="alert ok">Vaga confirmada!</div><span class="btn sm" style="margin-top:8px">Ir para Minhas Compras</span></div>
+<div class="state"><h4>Reserva expirou / recusado</h4><div class="alert">O tempo da reserva acabou e a vaga foi liberada.</div><div class="alert" style="margin-top:6px">Pagamento não aprovado. Tente outra forma.</div></div>
+<div class="state"><h4>Esgotada</h4><div class="alert">Caravana esgotada.</div><p class="muted" style="margin-top:6px">Selo no topo, barra de ação sem botão.</p></div>
+<div class="state"><h4>Carregando</h4><div class="skel" style="height:140px"></div></div>
+</div></section>
+
+<section><h2>Gestão · seção na mesma página (desktop)</h2><div class="frame f-d"><div class="body"><div class="row spread" style="margin-bottom:10px"><h2 style="font-size:1.3rem">Gestão</h2><div class="row"><span class="btn ghost">Baixar CSV</span><span class="btn ghost">Baixar PDF</span><span class="btn star">Confirmar caravana</span></div></div>
+<p class="muted" style="margin-bottom:10px">Confirmar: com 46 de 46 vagas pagas ou depois do prazo.</p>
+<div class="cardrow"><span>☐</span><div><b>Marcos Vinícius Almeida</b><br><span class="muted">R$ 85,00 · PIX</span></div><span class="badge ok">Pago</span><span class="btn danger sm">Estornar</span></div>
+<div class="cardrow"><span>☑</span><div><b>Fernanda Souza Lima</b><br><span class="muted">R$ 85,00 · Cartão 1x</span></div><span class="badge ok">Pago</span><span class="btn danger sm">Estornar</span></div>
+<div class="cardrow"><span>—</span><div><b>Rogério Tavares</b><br><span class="muted">R$ 110,00</span></div><span class="badge bad">Estornado</span><span></span></div>
+<p class="muted">Lista em cartões (sem tabela), igual no celular. Presença só após confirmar. Estorno abre o Modal de consequências (vaga devolvida, comprovante cancelado, irreversível; após confirmar, só Adm Geral).</p></div></div></section>
+</div></div>
+<script>
+document.querySelectorAll('[data-bus]').forEach(el=>{const t=+el.dataset.total,o=+el.dataset.occ,m=+(el.dataset.mine||0);let h='';
+for(let i=1;i<=t;i++){const cls=i===m?'mine':(i<=o?'occ':'free');
+const lab=cls==='occ'?`Banco ${i}, ocupado`:cls==='mine'?`Banco ${i}, sua vaga`:`Banco ${i}, livre. Pegar vaga`;
+h+=`<button class="seat ${cls}" aria-label="${lab}" ${cls==='occ'?'aria-disabled="true" tabindex="-1"':''}>${i}</button>`}
+el.innerHTML=h});
+</script>
+</body></html>

@@ -24,6 +24,7 @@ let proximo = 0;
   template: `
     <dialog
       #dlg
+      [class.lg]="size() === 'lg'"
       [attr.aria-labelledby]="tituloId"
       (cancel)="aoCancelar($event)"
       (click)="aoClicar($event)"
@@ -51,6 +52,10 @@ let proximo = 0;
       border: 2px solid var(--c-black);
       border-radius: var(--r-md);
       box-shadow: var(--shadow-hard);
+    }
+    dialog.lg {
+      width: min(94vw, 880px);
+      max-height: 92vh;
     }
     dialog::backdrop {
       background: rgb(10 10 10 / 0.65);
@@ -93,7 +98,8 @@ let proximo = 0;
       margin-top: 20px;
     }
     @media (max-width: 599px) {
-      dialog {
+      dialog,
+      dialog.lg {
         width: 100%;
         max-width: 100%;
         margin: auto 0 0;
@@ -110,6 +116,7 @@ export class Modal {
   readonly open = input(false, { transform: booleanAttribute });
   readonly heading = input.required<string>();
   readonly dismissible = input(true, { transform: booleanAttribute });
+  readonly size = input<'md' | 'lg'>('md');
   readonly closed = output<void>();
 
   protected readonly tituloId = `app-modal-${++proximo}`;

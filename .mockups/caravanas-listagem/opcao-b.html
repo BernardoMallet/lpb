@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Caravanas · Opção B — Lista densa + modal em 3 passos</title>
+<link rel="stylesheet" href="../_base.css">
+<style>
+.list{display:grid;gap:10px}.item{display:grid;grid-template-columns:150px 1fr auto;gap:14px;align-items:center;background:#fff;border:2px solid var(--ink);border-radius:var(--r-md);padding:10px;overflow:hidden}
+.item .cover{border-radius:var(--r-sm);aspect-ratio:16/10}.item .cover span{font-size:.62rem;padding:3px 6px}
+.item h3{font-size:1rem;margin-bottom:2px}.meta{display:flex;gap:6px 14px;flex-wrap:wrap;font-size:.85rem;color:var(--mute)}.side{text-align:right;display:grid;gap:6px;justify-items:end}
+.f-t .item{grid-template-columns:120px 1fr}.f-t .side{grid-column:1/-1;text-align:left;justify-items:stretch;display:flex;justify-content:space-between;align-items:center}
+.f-m .item{grid-template-columns:96px 1fr;gap:10px}.f-m .side{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;text-align:left}
+.createrow{display:flex;align-items:center;gap:14px;border:2px dashed var(--ink);border-radius:var(--r-md);padding:12px 14px}.createrow .plus{width:44px;height:44px;border-radius:50%;background:var(--star);border:2px solid var(--ink);display:grid;place-items:center;font:900 1.5rem/1 var(--display);flex:none}
+.steps{display:flex;gap:6px;padding:14px 20px 0}.steps li{list-style:none;flex:1;border-top:6px solid #d0d0cc;padding-top:6px;font-size:.75rem;font-weight:800;text-transform:uppercase}.steps li.on{border-color:var(--ink)}.steps li.done{border-color:var(--success)}.steps{margin:0}
+</style>
+</head>
+<body><div class="stripes"></div>
+<div class="page">
+<div class="intro"><p class="eyebrow">Rascunho descartável · Caravanas · opção B</p><h1>B: Lista densa + modal em 3 passos</h1>
+<p>Cada caravana é uma linha compacta (capa pequena, dados, preço e ação). “Criar caravana” vira linha tracejada no topo da lista. O Modal único contém um passo a passo: 1 Jogo e local, 2 Preços e vagas, 3 Capa e descrição.</p>
+<div class="pros">
+<div class="note"><b>Quando escolher</b>Muitas caravanas ao longo do ano (comparar datas e vagas rápido) e criação feita sobretudo no celular.</div>
+<div class="note"><b>Trade-offs</b>+ Formulário curto por passo, ótimo no celular. + Lista escaneável. − Capa menor (menos “torcida”). − Mais lógica: validação por passo e botão Voltar. − O Modal precisa de um indicador de passos (composição dentro do corpo, sem novo modal).</div>
+<div class="note"><b>Componentes do design system</b>Button, Card (variante linha), Modal (size lg), Input, Select, Skeleton, EmptyState. Novo: indicador de passos, como conteúdo do Modal.</div>
+<div class="note"><b>Acessibilidade</b>Lista semântica (&lt;ul&gt;), cada item com um único link. Passos como lista ordenada com <code>aria-current="step"</code>; ao avançar, o foco vai ao título do passo e o leitor anuncia “Passo 2 de 3”. Erros só bloqueiam “Próximo” e levam o foco ao primeiro campo inválido.</div>
+</div></div>
+
+<div class="stack">
+<section><h2>Desktop · listagem</h2><div class="frame f-d">
+<div class="hdr"><div class="logo">★</div><b>LOUCOS PELO BOTAFOGO</b><nav><a>Notícias</a><a class="on">Caravanas</a><a>Permissões</a><a>CPFs bloqueados</a></nav><div class="av">BM</div></div>
+<div class="body"><div class="top"><div><p class="eyebrow">Próximas saídas</p><h2>Caravanas</h2></div><div class="chips"><span class="chip on">Abertas</span><span class="chip">Esgotadas</span><span class="chip">Confirmadas</span><span class="chip">Canceladas</span></div></div>
+<div class="list">
+<div class="createrow"><span class="plus">+</span><div><h3 style="font-size:1rem">Criar caravana</h3><p class="muted">Cadastre jogo, local, preço e vagas em 3 passos.</p></div><span class="btn star" style="margin-left:auto">Criar caravana</span></div>
+<article class="item"><div class="cover"><span>Botafogo x Palmeiras</span></div><div><h3>Botafogo x Palmeiras</h3><div class="meta"><span>São Paulo/SP</span><span>sáb, 06/12 · saída 05:30</span><span>Vendas até 05/12</span></div><div class="bar" style="margin-top:8px;max-width:320px"><i style="width:67%"></i></div><p class="muted">15 vagas livres de 46</p></div><div class="side"><p class="price">R$ 85,00 <small>seu preço</small></p><span class="btn">Ver caravana</span></div></article>
+<article class="item"><div class="cover"><span>Botafogo x Corinthians</span></div><div><h3>Botafogo x Corinthians <span class="badge star">ESGOTADA</span></h3><div class="meta"><span>São Paulo/SP</span><span>dom, 14/12 · saída 06:00</span><span>Vendas até 13/12</span></div><div class="bar" style="margin-top:8px;max-width:320px"><i style="width:100%"></i></div><p class="muted">0 vagas livres de 46</p></div><div class="side"><p class="price">R$ 85,00 <small>seu preço</small></p><span class="btn ghost">Ver caravana</span></div></article>
+<article class="item"><div class="cover"><span>Botafogo x Cruzeiro</span></div><div><h3>Botafogo x Cruzeiro</h3><div class="meta"><span>Belo Horizonte/MG</span><span>sáb, 20/12 · saída 04:00</span><span>Vendas até 19/12</span></div><div class="bar" style="margin-top:8px;max-width:320px"><i style="width:22%"></i></div><p class="muted">36 vagas livres de 46</p></div><div class="side"><p class="price">R$ 110,00 <small>seu preço (não-sócio)</small></p><span class="btn">Ver caravana</span></div></article>
+</div></div></div></section>
+
+<section><h2>Tablet · listagem</h2><div class="frame f-t">
+<div class="hdr"><div class="burger">≡</div><b>LOUCOS PELO BOTAFOGO</b><div class="av">BM</div></div>
+<div class="body"><div class="top"><h2>Caravanas</h2><span class="btn star">+ Criar caravana</span></div>
+<div class="list">
+<article class="item"><div class="cover"><span>Botafogo x Palmeiras</span></div><div><h3>Botafogo x Palmeiras</h3><div class="meta"><span>São Paulo/SP</span><span>sáb, 06/12 · 05:30</span></div><p class="muted">15 vagas livres de 46</p></div><div class="side"><p class="price">R$ 85,00</p><span class="btn">Ver caravana</span></div></article>
+<article class="item"><div class="cover"><span>Botafogo x Corinthians</span></div><div><h3>Botafogo x Corinthians <span class="badge star">ESGOTADA</span></h3><div class="meta"><span>São Paulo/SP</span><span>dom, 14/12 · 06:00</span></div><p class="muted">0 vagas livres de 46</p></div><div class="side"><p class="price">R$ 85,00</p><span class="btn ghost">Ver caravana</span></div></article>
+</div></div></div></section>
+
+<section><h2>Celular · listagem</h2><div class="frame f-m">
+<div class="hdr"><div class="burger">≡</div><div class="av">BM</div></div>
+<div class="body"><h2 style="font-size:1.3rem;margin-bottom:12px">Caravanas</h2><span class="btn star block" style="margin-bottom:12px">+ Criar caravana</span>
+<div class="list">
+<article class="item"><div class="cover"><span>Botafogo x Palmeiras</span></div><div><h3 style="font-size:.9rem">Botafogo x Palmeiras</h3><div class="meta"><span>São Paulo/SP</span><span>06/12 · 05:30</span></div><p class="muted">15 livres de 46</p></div><div class="side"><p class="price">R$ 85,00</p><span class="btn sm">Ver</span></div></article>
+<article class="item"><div class="cover"><span>Botafogo x Corinthians</span></div><div><h3 style="font-size:.9rem">Botafogo x Corinthians</h3><div class="meta"><span>São Paulo/SP</span><span>14/12 · 06:00</span></div><span class="badge star">ESGOTADA</span></div><div class="side"><p class="price">R$ 85,00</p><span class="btn sm ghost">Ver</span></div></article>
+</div></div></div></section>
+
+<section><h2>Modal em passos · desktop (3 passos lado a lado)</h2>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px">
+<div class="frame"><div class="scrim"><div class="modal"><div class="mh"><h3>Criar caravana</h3><span class="x">×</span></div><ol class="steps"><li class="on" aria-current="step">1 Jogo e local</li><li>2 Preços</li><li>3 Capa</li></ol><div class="mb"><span class="lbl">Jogo</span><div class="inp">Botafogo x Palmeiras</div><div class="cols"><div><span class="lbl">UF</span><div class="inp">SP ▾</div></div><div><span class="lbl">Município</span><div class="inp err">Selecione ▾</div><p class="errtxt">Escolha o município.</p></div></div><span class="lbl">Partida</span><div class="inp">06/12/2026 05:30</div><span class="lbl">Data limite de vendas</span><div class="inp">05/12/2026 23:59</div></div><div class="mf"><span class="btn ghost">Cancelar</span><span class="btn">Próximo</span></div></div></div></div>
+<div class="frame"><div class="scrim"><div class="modal"><div class="mh"><h3>Criar caravana</h3><span class="x">×</span></div><ol class="steps"><li class="done">1 Jogo e local</li><li class="on" aria-current="step">2 Preços</li><li>3 Capa</li></ol><div class="mb"><span class="lbl">Preço-base (R$)</span><div class="inp">85,00</div><p class="hint">0 = vaga grátis.</p><span class="lbl">Preço do não-sócio (calculado)</span><div class="inp" style="background:var(--paper)">R$ 110,50</div><div class="cols"><div><span class="lbl">Total de vagas</span><div class="inp">46</div></div><div><span class="lbl">Máx. de parcelas</span><div class="inp">1x ▾</div></div></div></div><div class="mf"><span class="btn ghost">Voltar</span><span class="btn">Próximo</span></div></div></div></div>
+<div class="frame"><div class="scrim"><div class="modal"><div class="mh"><h3>Criar caravana</h3><span class="x">×</span></div><ol class="steps"><li class="done">1 Jogo e local</li><li class="done">2 Preços</li><li class="on" aria-current="step">3 Capa</li></ol><div class="mb"><span class="lbl">Imagem de capa</span><div class="drop">Selecionar imagem · JPG, PNG ou WebP · até 5 MB</div><span class="lbl">Descrição</span><div class="inp" style="min-height:84px;align-items:start;padding-top:10px">Saída da sede às 05:30.</div><p class="hint">24 de 2000 caracteres</p></div><div class="mf"><span class="btn ghost">Voltar</span><span class="btn">Criar caravana</span></div></div></div></div>
+</div></section>
+
+<section><h2>Modal em passos · celular (folha de baixo)</h2><div class="frame f-m"><div class="scrim sheetwrap"><div class="modal sheet"><div class="mh"><h3>Criar caravana</h3><span class="x">×</span></div><ol class="steps"><li class="done">1</li><li class="on" aria-current="step">2 Preços</li><li>3</li></ol><div class="mb"><span class="lbl">Preço-base (R$)</span><div class="inp">85,00</div><span class="lbl">Total de vagas</span><div class="inp">46</div><span class="lbl">Máx. de parcelas</span><div class="inp">1x ▾</div></div><div class="mf"><span class="btn block">Próximo</span><span class="btn block ghost">Voltar</span></div></div></div></div></section>
+
+<section><h2>Estados</h2><div class="states">
+<div class="state"><h4>Carregando</h4><div class="skel" style="height:64px"></div><div class="skel" style="height:64px"></div><p class="muted">Skeleton com formato de linha.</p></div>
+<div class="state"><h4>Vazio</h4><p><b>Nenhuma caravana aberta.</b></p><p class="muted">Quem pode criar vê a linha “Criar caravana”.</p></div>
+<div class="state"><h4>Erro de carga</h4><div class="alert" role="alert">Não foi possível carregar as caravanas.</div></div>
+<div class="state"><h4>Erro de servidor no passo 3</h4><div class="alert">Imagem inválida: use JPG, PNG ou WebP de até 5 MB.</div><p class="muted" style="margin-top:6px">Se o 422 for de um campo de passo anterior, o modal volta àquele passo e marca o campo.</p></div>
+<div class="state"><h4>Enviando</h4><p>“Criando…” desabilitado; Voltar e fechar bloqueados.</p></div>
+<div class="state"><h4>Rascunho</h4><p class="muted">Fechar com dados preenchidos pede confirmação (“Descartar caravana?”).</p></div>
+</div></section>
+</div></div></body></html>

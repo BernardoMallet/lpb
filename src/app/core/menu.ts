@@ -17,6 +17,7 @@ export interface ItemMenu {
 export const MENU: readonly ItemMenu[] = [
   { rotulo: 'Notícias', rota: ROTAS.noticias, icone: 'news' },
   { rotulo: 'Caravanas', rota: ROTAS.caravanas, icone: 'bus' },
+  { rotulo: 'Aprovações', rota: ROTAS.aprovacoes, icone: 'inbox', papeis: PAPEIS_GESTAO },
   { rotulo: 'Permissões', rota: ROTAS.permissoes, icone: 'key', papeis: PAPEIS_GESTAO },
   { rotulo: 'CPFs bloqueados', rota: ROTAS.cpfsBloqueados, icone: 'ban', papeis: PAPEIS_GESTAO },
 ];

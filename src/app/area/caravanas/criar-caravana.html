@@ -1,0 +1,129 @@
+<app-modal
+  heading="Criar caravana"
+  size="lg"
+  [open]="open()"
+  [dismissible]="!salvando()"
+  (closed)="closed.emit()"
+>
+  @if (estreito()) {
+    <app-tabs [tabs]="abas" label="Seções do formulário" prefix="criar" [(active)]="aba" />
+  }
+
+  <div class="grade">
+    <div
+      class="painel"
+      [hidden]="estreito() && aba() !== 'dados'"
+      [attr.role]="estreito() ? 'tabpanel' : null"
+      [attr.id]="estreito() ? 'criar-painel-dados' : null"
+      [attr.aria-labelledby]="estreito() ? 'criar-aba-dados' : null"
+    >
+    <form id="form-criar-caravana" class="dados" novalidate [formGroup]="form" (ngSubmit)="salvar()">
+      @if (erroGeral(); as mensagem) {
+        <app-alert kind="erro">{{ mensagem }}</app-alert>
+      }
+
+      <div data-campo="cover">
+        <app-file-input
+          label="Capa (opcional)"
+          accept="image/jpeg,image/png"
+          hint="JPG ou PNG, até 5 MB. A imagem é redimensionada e os metadados são removidos."
+          [error]="erros().cover ?? null"
+          (chosen)="escolherCapa($event)"
+        />
+      </div>
+
+      <div data-campo="gameName">
+        <app-input label="Jogo" formControlName="gameName" hint="Ex.: Botafogo x Vasco" [error]="erros().gameName ?? null" />
+      </div>
+
+      <div class="linha">
+        <div data-campo="state">
+          <app-select label="UF" placeholder="Escolha" formControlName="state" [options]="estados()" [error]="erros().state ?? null" />
+        </div>
+        <div data-campo="municipalityId">
+          <app-select
+            label="Município"
+            [placeholder]="carregandoMunicipios() ? 'Carregando…' : 'Escolha'"
+            formControlName="municipalityId"
+            [options]="municipios()"
+            [error]="erros().municipalityId ?? null"
+          />
+        </div>
+      </div>
+
+      <div class="linha">
+        <div data-campo="departsAt">
+          <app-input label="Partida" type="datetime-local" formControlName="departsAt" [error]="erros().departsAt ?? null" />
+        </div>
+        <div data-campo="salesDeadline">
+          <app-input
+            label="Vendas até"
+            type="datetime-local"
+            formControlName="salesDeadline"
+            [error]="erros().salesDeadline ?? null"
+          />
+        </div>
+      </div>
+
+      <div class="linha tres">
+        <div data-campo="basePrice">
+          <app-input
+            label="Preço base (R$)"
+            inputmode="decimal"
+            formControlName="basePrice"
+            hint="0 = vaga grátis"
+            [error]="erros().basePrice ?? null"
+          />
+        </div>
+        <div data-campo="totalSeats">
+          <app-input label="Vagas" inputmode="numeric" formControlName="totalSeats" [error]="erros().totalSeats ?? null" />
+        </div>
+        <div data-campo="maxInstallments">
+          <app-input
+            label="Máx. de parcelas"
+            inputmode="numeric"
+            formControlName="maxInstallments"
+            hint="1 = só à vista"
+            [error]="erros().maxInstallments ?? null"
+          />
+        </div>
+      </div>
+
+      <div data-campo="description">
+        <app-input
+          label="Descrição"
+          formControlName="description"
+          [linhas]="4"
+          [maxlength]="2000"
+          hint="Texto simples, até 2000 caracteres."
+          [error]="erros().description ?? null"
+        />
+      </div>
+    </form>
+    </div>
+
+    <aside
+      class="previa"
+      aria-label="Prévia do card"
+      [hidden]="estreito() && aba() !== 'previa'"
+      [attr.role]="estreito() ? 'tabpanel' : null"
+      [attr.id]="estreito() ? 'criar-painel-previa' : null"
+      [attr.aria-labelledby]="estreito() ? 'criar-aba-previa' : null"
+    >
+      @if (!estreito()) {
+        <p class="eyebrow">Prévia</p>
+      }
+      <app-caravana-card [dados]="previa()" />
+      <p class="nota">O preço exibido é o base. Para não sócios, o acréscimo é somado pelo sistema.</p>
+    </aside>
+  </div>
+
+  <button footer app-button type="button" variant="outline" [disabled]="salvando()" (click)="closed.emit()">Cancelar</button>
+  <button footer app-button type="submit" form="form-criar-caravana" variant="dark" [loading]="salvando()">
+    @if (salvando()) {
+      Criando…
+    } @else {
+      Criar caravana
+    }
+  </button>
+</app-modal>

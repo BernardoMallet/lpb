@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Aprovações · Opção B — Tabela com ações e confirmação</title>
+<link rel="stylesheet" href="../_base.css">
+<style>
+.f-m table.t thead{position:absolute;left:-9999px}.f-m table.t,.f-m table.t tbody,.f-m table.t tr,.f-m table.t td{display:block}.f-m table.t tr{border:2px solid var(--ink);border-radius:var(--r-md);margin-bottom:12px;padding:10px}.f-m table.t td{border:0;padding:4px 0}.f-m table.t td::before{content:attr(data-l)": ";font-weight:800}
+.rowa{display:flex;gap:8px;flex-wrap:wrap}.rel{position:relative}.toast{position:absolute;right:16px;bottom:16px;background:var(--ink);color:#fff;padding:12px 14px;border-radius:var(--r-sm);font-weight:700;border-left:6px solid var(--star)}
+.err{color:var(--danger);font-weight:700;font-size:.85rem;margin-top:4px}
+</style>
+</head>
+<body><div class="stripes"></div>
+<div class="page">
+<div class="intro"><p class="eyebrow">Rascunho descartável · Aprovações · opção B</p><h1>B: Tabela com ações e confirmação em modal</h1>
+<p>Tabela única do design system: Diretor, Caravana, Pedido em, Decisão. Ao clicar em Sim ou Não, abre o Modal único com a frase “Diretor {nome} pede vaga na caravana X. Conceder?” para confirmar. No celular a tabela vira cartões.</p>
+<div class="pros">
+<div class="note"><b>Quando escolher</b>Fila média/longa, quando se quer comparar pedidos por caravana ou data e evitar clique acidental.</div>
+<div class="note"><b>Trade-offs</b>+ Densa, ordenável por coluna depois. + Confirmação evita decisão por engano (o Sim consome uma vaga de verdade). − Dois cliques por decisão. − Tabela no celular precisa virar cartão.</div>
+<div class="note"><b>Componentes do design system</b>Table (existente, com <code>cell</code> template), Modal, Button, Toast, Alert, EmptyState. Nada novo.</div>
+<div class="note"><b>Acessibilidade</b>Tabela com <code>caption</code> e cabeçalhos <code>scope="col"</code>; botões da linha com nome completo (“Conceder vaga a João Carlos Pereira na caravana Botafogo x Palmeiras”). Modal: foco no botão seguro (“Voltar”), Esc fecha; erro do servidor aparece dentro do modal, que fica aberto. Retorno de foco à linha seguinte.</div>
+</div></div>
+
+<div class="stack">
+<section><h2>Desktop</h2><div class="frame f-d rel"><div class="hdr"><div class="logo">★</div><b>LOUCOS PELO BOTAFOGO</b><nav><a>Notícias</a><a>Caravanas</a><a class="on">Aprovações</a><a>Permissões</a><a>CPFs bloqueados</a></nav><div class="av">BM</div></div>
+<div class="body" style="min-height:360px"><div class="top"><div><p class="eyebrow">Presidente e Adm Geral</p><h2>Aprovações</h2></div><span class="badge dark">3 pendentes</span></div>
+<table class="t"><caption class="muted" style="text-align:left;padding-bottom:6px">Pedidos de vaga grátis de diretores</caption><thead><tr><th scope="col">Diretor</th><th scope="col">Caravana</th><th scope="col">Pedido em</th><th scope="col">Decisão</th></tr></thead><tbody>
+<tr><td data-l="Diretor">João Carlos Pereira</td><td data-l="Caravana">Botafogo x Palmeiras</td><td data-l="Pedido em">14/11 18:20</td><td><div class="rowa"><span class="btn sm">Sim</span><span class="btn sm ghost">Não</span></div></td></tr>
+<tr><td data-l="Diretor">Alexandre Moura</td><td data-l="Caravana">Botafogo x Corinthians</td><td data-l="Pedido em">14/11 17:02</td><td><div class="rowa"><span class="btn sm">Sim</span><span class="btn sm ghost">Não</span></div></td></tr>
+<tr><td data-l="Diretor">Rafael Barros</td><td data-l="Caravana">Botafogo x Cruzeiro</td><td data-l="Pedido em">13/11 21:45</td><td><div class="rowa"><span class="btn sm">Sim</span><span class="btn sm ghost">Não</span></div></td></tr></tbody></table></div>
+<div class="toast" role="status">Pedido de Rafael Barros negado.</div></div></section>
+
+<section><h2>Modal de confirmação · desktop, tablet e celular</h2>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;align-items:start">
+<div class="frame f-t"><div class="scrim"><div class="modal"><div class="mh"><h3>Conceder vaga?</h3><span class="x">×</span></div><div class="mb" style="padding-top:12px"><p style="font-size:1.05rem"><b>Diretor João Carlos Pereira</b> pede vaga na caravana <b>Botafogo x Palmeiras</b>. Conceder?</p><p class="muted" style="margin-top:8px">A vaga é reservada agora, sem custo. Restam 15 de 46.</p></div><div class="mf"><span class="btn ghost">Voltar</span><span class="btn">Sim, conceder</span></div></div></div></div>
+<div class="frame f-m"><div class="scrim"><div class="modal"><div class="mh"><h3>Conceder vaga?</h3><span class="x">×</span></div><div class="mb" style="padding-top:12px"><p><b>Diretor Alexandre Moura</b> pede vaga na caravana <b>Botafogo x Corinthians</b>. Conceder?</p><div class="alert" role="alert" style="margin-top:10px">Caravana esgotada. Não é possível conceder a vaga.</div></div><div class="mf"><span class="btn danger">Negar o pedido</span><span class="btn ghost">Voltar</span></div></div></div></div>
+</div></section>
+
+<section><h2>Tablet</h2><div class="frame f-t"><div class="hdr"><div class="burger">≡</div><b>LOUCOS PELO BOTAFOGO</b><div class="av">BM</div></div><div class="body"><h2 style="font-size:1.3rem;margin-bottom:12px">Aprovações <span class="badge dark">3</span></h2><table class="t"><thead><tr><th>Diretor</th><th>Caravana</th><th>Decisão</th></tr></thead><tbody><tr><td>João Carlos Pereira</td><td>Botafogo x Palmeiras</td><td><div class="rowa"><span class="btn sm">Sim</span><span class="btn sm ghost">Não</span></div></td></tr><tr><td>Alexandre Moura</td><td>Botafogo x Corinthians</td><td><div class="rowa"><span class="btn sm">Sim</span><span class="btn sm ghost">Não</span></div></td></tr></tbody></table><p class="muted" style="margin-top:6px">A coluna “Pedido em” sai no tablet e aparece no Modal.</p></div></div></section>
+
+<section><h2>Celular (tabela vira cartões)</h2><div class="frame f-m"><div class="hdr"><div class="burger">≡</div><div class="av">BM</div></div><div class="body"><h2 style="font-size:1.2rem;margin-bottom:12px">Aprovações <span class="badge dark">3</span></h2><table class="t"><thead><tr><th>Diretor</th></tr></thead><tbody><tr><td data-l="Diretor"><b>João Carlos Pereira</b></td><td data-l="Caravana">Botafogo x Palmeiras</td><td data-l="Pedido em">14/11 18:20</td><td><div class="rowa"><span class="btn" style="flex:1">Sim</span><span class="btn ghost" style="flex:1">Não</span></div></td></tr><tr><td data-l="Diretor"><b>Alexandre Moura</b></td><td data-l="Caravana">Botafogo x Corinthians</td><td data-l="Pedido em">14/11 17:02</td><td><div class="rowa"><span class="btn" style="flex:1">Sim</span><span class="btn ghost" style="flex:1">Não</span></div></td></tr></tbody></table></div></div></section>
+
+<section><h2>Estados</h2><div class="states">
+<div class="state"><h4>Carregando</h4><div class="skel" style="height:40px"></div><div class="skel" style="height:40px"></div><div class="skel" style="height:40px"></div></div>
+<div class="state"><h4>Vazio</h4><p><b>Nenhum pedido pendente.</b></p><p class="muted">EmptyState dentro da Table.</p></div>
+<div class="state"><h4>Erro de carga</h4><div class="alert" role="alert">Não foi possível carregar os pedidos.</div></div>
+<div class="state"><h4>Já decidido (409)</h4><div class="alert">Este pedido já foi decidido. A lista foi atualizada.</div></div>
+<div class="state"><h4>Enviando</h4><p>“Concedendo…” no botão do Modal; Voltar e fechar travados.</p></div>
+<div class="state"><h4>Sem permissão</h4><p class="muted">Item de menu oculto; URL direta leva a “Sem acesso”.</p></div>
+</div></section>
+
+<section><h2>Minhas Compras seguindo o padrão desta opção (tabela)</h2><div class="frame f-d"><div class="body"><h2 style="font-size:1.4rem;margin-bottom:12px">Minhas Compras</h2><table class="t"><thead><tr><th>Compra</th><th>Data</th><th>Valor</th><th>Status</th><th>Comprovante</th></tr></thead><tbody><tr><td>Vaga na caravana Botafogo x Palmeiras</td><td>14/11/2026</td><td>R$ 85,00</td><td><span class="badge ok">Paga</span></td><td><span class="btn sm">Baixar PDF</span></td></tr><tr><td>Vaga na caravana Botafogo x Cruzeiro</td><td>10/11/2026</td><td>R$ 85,00</td><td><span class="badge bad">Estornada</span></td><td><span class="btn sm ghost">PDF (cancelado)</span></td></tr><tr><td>Vaga na caravana Botafogo x Grêmio</td><td>—</td><td>R$ 85,00</td><td><span class="badge">Pendente</span></td><td><span class="btn sm star">Continuar pagamento</span></td></tr></tbody></table></div></div><p class="muted" style="margin-top:6px">Celular: cartões (mesma técnica da tabela de Aprovações).</p></section>
+</div></div></body></html>

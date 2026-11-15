@@ -1,5 +1,5 @@
 import { NgTemplateOutlet } from '@angular/common';
-import { ChangeDetectionStrategy, Component, TemplateRef, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, TemplateRef, booleanAttribute, input } from '@angular/core';
 
 export interface Coluna<T> {
   chave: string;
@@ -23,7 +23,7 @@ export interface ContextoCelula<T> {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     @if (rows().length) {
-      <div class="rolagem" role="region" tabindex="0" [attr.aria-label]="caption()">
+      <div class="rolagem" [class.empilha]="stack()" role="region" tabindex="0" [attr.aria-label]="caption()">
         <table>
           <caption class="sr-only">
             {{ caption() }}
@@ -39,7 +39,7 @@ export interface ContextoCelula<T> {
             @for (linha of rows(); track $index) {
               <tr>
                 @for (c of columns(); track c.chave) {
-                  <td>
+                  <td [attr.data-rotulo]="c.rotulo">
                     @if (cell(); as modelo) {
                       <ng-container
                         [ngTemplateOutlet]="modelo"
@@ -92,11 +92,60 @@ export interface ContextoCelula<T> {
     td {
       border-top: 1px solid var(--c-paper);
     }
+    @media (max-width: 599px) {
+      .empilha {
+        overflow: visible;
+        background: none;
+        border: 0;
+      }
+      .empilha table,
+      .empilha tbody,
+      .empilha tr,
+      .empilha td {
+        display: block;
+      }
+      .empilha thead {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+      }
+      .empilha tr {
+        margin-bottom: 12px;
+        background: var(--c-white);
+        border: 2px solid var(--c-black);
+        border-radius: var(--r-md);
+      }
+      .empilha td {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        white-space: normal;
+        text-align: right;
+      }
+      .empilha td::before {
+        content: attr(data-rotulo);
+        flex: none;
+        color: var(--c-mute);
+        font-size: 0.75rem;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-align: left;
+        text-transform: uppercase;
+      }
+      .empilha td:first-child {
+        border-top: 0;
+      }
+    }
   `,
 })
 export class Table<T> {
   readonly columns = input.required<readonly Coluna<T>[]>();
   readonly rows = input.required<readonly T[]>();
   readonly caption = input.required<string>();
+  /** Abaixo de 600px cada linha vira um cartão com rótulo e valor. */
+  readonly stack = input(false, { transform: booleanAttribute });
   readonly cell = input<TemplateRef<ContextoCelula<T>> | null>(null);
 }
